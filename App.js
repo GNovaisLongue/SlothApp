@@ -20,11 +20,6 @@ const Drawer = createDrawerNavigator();
 const MaterialBottomTabs = createMaterialBottomTabNavigator();
 const BottomTab = createBottomTabNavigator();
 
-require("dotenv").config();
-const express = require("express");
-const app = express();
-const PORT = proccess.env.PORT;
-
 export default function App() {
   //colocar um dark mode no app; falta um arquivo style que seja "claro"
   const MyTheme = {

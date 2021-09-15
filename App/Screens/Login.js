@@ -10,6 +10,7 @@ import {
   Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+// import Discord from "../Routes/Discord";
 
 import styles from "../Styles/style";
 
@@ -21,7 +22,7 @@ const Login = () => {
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
             <Text style={styles.logoText}>A</Text>
-            <TextInput
+            {/* <TextInput
               placeholder="Username"
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
@@ -31,23 +32,17 @@ const Login = () => {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
-            />
+            /> */}
             <Button
               buttonStyle={styles.loginButton}
               onPress={() => onLoginPress()}
-              title="Login"
+              title="Discord"
             />
-            <Button
+            {/* <Button
               buttonStyle={styles.loginButton}
               onPress={() => onSignInPress()}
               title="SignUp"
-            />
-            <Button
-              buttonStyle={styles.loginButton}
-              onPress={() => onGoogleAuthPress()}
-              title="Login with Google"
-              color="#D32F2F" //red
-            />
+            /> */}
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -57,19 +52,14 @@ const Login = () => {
   function onLoginPress() {
     //auth - user e senha
     //if ok
+    window.location.href='/api/discord/login';
+    console.log(window.location.href);
     navigation.navigate("Home");
   }
   function onSignInPress() {
     //auth
     //if ok
     navigation.navigate("SignUp");
-  }
-  function onGoogleAuthPress() {
-    //google API
-    //auth - user e senha
-    //if ok
-    // navigation.navigate('Home')
-    alert("auth");
   }
 };
 export default Login;
