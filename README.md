@@ -1,6 +1,6 @@
-fitplus
+
 Initial Commit accessed via GitKraken
-Final Project - Mobile App fitplus
+Final Project - Mobile App
 Done using React
 
 App.js - responsible for navigation and styles
@@ -11,7 +11,6 @@ Contains:
 - drawer with access to 'Home' Screen, 'Login' Screen and 'Imc' Screen;
 - bottom Tab with access to 'Home' Screen, 'NewTrain' Screen and 'Profile' Screen. (yet to be rooted)
 
-NewTrain Screen - Screen where the user can edit/create his card and will be stored in the database. (yet to be created)
 Imc Screen - Screen where user insert his weight and height and will be given his Body Mass index.
 
 App using imports:
