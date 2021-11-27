@@ -9,11 +9,9 @@ import {
   KeyboardAvoidingView,
   Button,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import styles from "../Styles/style";
+import styles from "../Styles/styles";
 
-const SignUp = () => {
-  const navigation = useNavigation();
+const SignUp = ({navigation}) => {
   return (
     <KeyboardAvoidingView style={styles.containerView} behavior="padding">
       <TouchableWithoutFeedback>

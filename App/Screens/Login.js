@@ -12,7 +12,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 // import Discord from "../Routes/Discord";
 
-import styles from "../Styles/style";
+import styles from "../Styles/styles";
 
 const Login = () => {
   const navigation = useNavigation();
@@ -52,7 +52,7 @@ const Login = () => {
   function onLoginPress() {
     //auth - user e senha
     //if ok
-    window.location.href='/api/discord/login';
+    //window.location.href='https://discord.com/api/oauth2/authorize?client_id=845808880171876393&redirect_uri=http%3A%2F%2Flocalhost%3A19006%2Fauth%2Fredirect&response_type=code&scope=identify%20guilds';
     console.log(window.location.href);
     navigation.navigate("Home");
   }

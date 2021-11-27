@@ -1,33 +1,29 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { Text, View, Button, TouchableOpacity } from "react-native";
+import styles from "../Styles/styles"
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Profile = () => {
-  const navigation = useNavigation();
+const Profile = ({navigation}) => {
   return (
     <View style={styles.container}>
-      <Text>Open up Profile.js to start working on your app!</Text>
-      <Button
-        buttonStyle={styles.loginButton}
-        onPress={() => onImcPress()}
-        title="IMC"
-      />
-      <StatusBar style="auto" />
+      
+      <View style={styles.header}>
+        <Text>Header</Text>
+      </View>
+
+      <View style={styles.container}>
+        <Text>Open up Profile.js to start working on your app!</Text>
+        <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate("MyModal")}>
+          <Icon name="store" size={36}/>
+        </TouchableOpacity>
+        <StatusBar style="auto" />
+      </View>
     </View>
   );
   function onImcPress() {
-    navigation.navigate("Imc");
+    //navigation.navigate("");
   }
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
 
 export default Profile;
