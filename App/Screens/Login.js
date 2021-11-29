@@ -22,7 +22,7 @@ const Login = () => {
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
             <Text style={styles.logoText}>A</Text>
-            {/* <TextInput
+            <TextInput
               placeholder="Username"
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
@@ -32,17 +32,17 @@ const Login = () => {
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
-            /> */}
+            />
             <Button
               buttonStyle={styles.loginButton}
               onPress={() => onLoginPress()}
               title="Discord"
             />
-            {/* <Button
+            <Button
               buttonStyle={styles.loginButton}
               onPress={() => onSignInPress()}
               title="SignUp"
-            /> */}
+            />
           </View>
         </View>
       </TouchableWithoutFeedback>

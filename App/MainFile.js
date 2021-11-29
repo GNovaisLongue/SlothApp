@@ -1,15 +1,44 @@
 import React from "react";
 import BottomTabs from "./Screens/BottomTabs";
-import {Modal,SignUp} from "./Screens/Index";
+import { Login, SignUp, Modal } from "./Screens/Index";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+const Stack = createStackNavigator();
 const RootStack = createStackNavigator();
 
-export default function MainFile(){
+export default function MainFile() {
+  const loginStack = () => (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Login"
+        component={Login}
+        options={{
+          title: "LoginScreen",
+        }}
+      />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{
+          title: "SignUpScreen",
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={rootStack}
+        options={{
+          title: "",
+          headerShown: false,
+        }}
+      />
+      {/* <Stack.Screen name="Login with Google" component={ApiGoogle} /> */}
+    </Stack.Navigator>
+  );
 
   const rootStack = () => {
-    return(
+    return (
       <RootStack.Navigator mode="modal">
         <RootStack.Screen
           name="BottomTab"
@@ -19,14 +48,9 @@ export default function MainFile(){
             headerShown: false,
           }}
         />
-        <RootStack.Screen
-          name="MyModal" component={Modal}
-        />
-        <RootStack.Screen 
-          name="SignUp" component={SignUp}
-        />
+        <RootStack.Screen name="MyModal" component={Modal} />
       </RootStack.Navigator>
     );
-  }
-  return <NavigationContainer>{rootStack()}</NavigationContainer>;
+  };
+  return <NavigationContainer>{loginStack()}</NavigationContainer>;
 }
