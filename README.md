@@ -1,13 +1,14 @@
 Sloth
+
 Initial Commit accessed via GitKraken
-Final Project - Mobile App fitplus
+Final Project - Mobile App
 Done using React
 
 App.js - Initialization file leading to 'MainFile.js'
 BottomTabs.js - Bottom Tab containing navigator and route between main screens
 Profile.js - Main screen and the one that show the character of the users and leads to the store (Store.js yet to be added)
 Classes.js - list of current classes along with calendar and list of teachers
-Games.js - 
+Games.js - minigames (need access to their database)
 Settings.js - 
 Contains:
 
