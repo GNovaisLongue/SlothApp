@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -91,6 +91,56 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35,
+  },
+  //Modal.js - store
+  listModal: {
+    flexDirection: "row",
+    width: "100%",
+    alignSelf: "center",
+    marginBottom: 10,
+  },
+  buttonModal: {
+    width: "20%",
+    flexDirection: "row",
+    borderWidth: 0.5,
+    borderColor: "#ebebeb",
+    padding: 10,
+    justifyContent: "center",
+  },
+  buttonModalActive: {
+    backgroundColor: "#e6838d",
+  },
+  textModal: {
+    fontSize: 16,
+  },
+  textModalActive: {
+    color: "#ffffff",
+  },
+  itemRenderModal: {
+    flexDirection: "row",
+    paddingVertical: 15,
+  },
+  itemLogo: {
+    padding: 10,
+  },
+  itemImage: {
+    width: 50,
+    height: 50,
+  },
+  itemBody: {
+    flex: 1,
+    paddingHorizontal: 10,
+    justifyContent: "center",
+  },
+  itemName: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  itemStatus: {
+    backgroundColor: "green",
+    paddingHorizontal: 6,
+    justifyContent: "center",
+    right: 12,
   },
 
   //
