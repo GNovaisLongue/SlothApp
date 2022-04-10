@@ -7,7 +7,7 @@ const Home = () => {
   return (
     <View style={styles.container}>
       <Text>Tab 1 - Home</Text>
-      <Text>Open up Menu.js to start working on your app!</Text>
+      <Text>Open up Home.js to start working on your app!</Text>
       <StatusBar style="auto" />
     </View>
   );

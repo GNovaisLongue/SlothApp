@@ -1,9 +1,9 @@
 import React from "react";
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from "react-native-vector-icons/MaterialIcons";
 
-import {Profile,Classes,Settings,Games,Modal} from "./Index";
+import { MainMenu, Classes, Settings, Notifications, Modal } from "./Index";
 import styles from "../Styles/styles";
 
 const Tab = createMaterialBottomTabNavigator(); //Android
@@ -23,38 +23,46 @@ const BottomTabs = () => {
   return (
     <Tab.Navigator
       barStyle={{
-        backgroundColor: '#19A04FB5'
+        backgroundColor: "#19A04FB5",
       }}
-      >
-      <Tab.Screen name="Profile" component={Profile}
+    >
+      <Tab.Screen
+        name="MainMenu"
+        component={MainMenu}
         options={{
-          tabBarLabel: "Profile",
-          tabBarIcon:({color}) =>(
-            <Icon name="home" color={color} size={26}/> 
+          tabBarLabel: "Home",
+          tabBarIcon: ({ color }) => (
+            <Icon name="home" color={color} size={26} />
           ),
         }}
       />
-      <Tab.Screen name="Class" component={Classes} 
+      <Tab.Screen
+        name="Class"
+        component={Classes}
         options={{
           tabBarLabel: "Class",
-          tabBarIcon:({color}) =>(
-            <Icon name="class" color={color} size={26}/> 
+          tabBarIcon: ({ color }) => (
+            <Icon name="class" color={color} size={26} />
           ),
         }}
       />
-      <Tab.Screen name="Notification" component={Games}
+      <Tab.Screen
+        name="Notification"
+        component={Notifications}
         options={{
           tabBarLabel: "Notifications",
-          tabBarIcon:({color}) =>(
-            <Icon name="notifications" color={color} size={26}/> 
+          tabBarIcon: ({ color }) => (
+            <Icon name="notifications" color={color} size={26} />
           ),
         }}
       />
-      <Tab.Screen name="Settings" component={Settings} 
+      <Tab.Screen
+        name="Settings"
+        component={Settings}
         options={{
           tabBarLabel: "Settings",
-          tabBarIcon:({color}) =>(
-            <Icon name="settings" color={color} size={26}/> 
+          tabBarIcon: ({ color }) => (
+            <Icon name="settings" color={color} size={26} />
           ),
         }}
       />

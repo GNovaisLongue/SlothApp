@@ -1,9 +1,9 @@
-import Profile from "./Profile";
+import MainMenu from "./MainMenu";
 import Classes from "./Classes";
 import Settings from "./Settings";
-import Games from "./Games";
+import Notifications from "./Notifications";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Modal from "./Modal";
 
-export {Profile,Classes,Settings,Games,Login,SignUp,Modal}
+export {MainMenu,Classes,Settings,Notifications,Login,SignUp,Modal}
