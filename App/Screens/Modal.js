@@ -53,7 +53,7 @@ const data = [
   },
   {
     name: "A8",
-    status: "background",
+    status: "Background",
   },
 ];
 

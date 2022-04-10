@@ -15,6 +15,7 @@ export default function MainFile() {
         component={Login}
         options={{
           title: "LoginScreen",
+          headerShown: false,
         }}
       />
       <Stack.Screen

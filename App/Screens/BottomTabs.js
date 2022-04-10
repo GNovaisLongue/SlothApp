@@ -1,14 +1,13 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {Profile,Classes,Settings,Games,Modal} from "./Index";
-import { NavigationContainer } from "@react-navigation/native";
+import styles from "../Styles/styles";
 
-const Tab = createMaterialBottomTabNavigator();
-//const Tab = createBottomTabNavigator();
+const Tab = createMaterialBottomTabNavigator(); //Android
+//const Tab = createBottomTabNavigator(); //IOS
 
 const BottomTabs = () => {
   // return (
@@ -22,7 +21,11 @@ const BottomTabs = () => {
   //   </NavigationContainer>
   // );
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      barStyle={{
+        backgroundColor: '#19A04FB5'
+      }}
+      >
       <Tab.Screen name="Profile" component={Profile}
         options={{
           tabBarLabel: "Profile",
@@ -39,19 +42,19 @@ const BottomTabs = () => {
           ),
         }}
       />
+      <Tab.Screen name="Notification" component={Games}
+        options={{
+          tabBarLabel: "Notifications",
+          tabBarIcon:({color}) =>(
+            <Icon name="notifications" color={color} size={26}/> 
+          ),
+        }}
+      />
       <Tab.Screen name="Settings" component={Settings} 
         options={{
           tabBarLabel: "Settings",
           tabBarIcon:({color}) =>(
             <Icon name="settings" color={color} size={26}/> 
-          ),
-        }}
-      />
-      <Tab.Screen name="Games" component={Games}
-        options={{
-          tabBarLabel: "Games",
-          tabBarIcon:({color}) =>(
-            <Icon name="videogame-asset" color={color} size={26}/> 
           ),
         }}
       />

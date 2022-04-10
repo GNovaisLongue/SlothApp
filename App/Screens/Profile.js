@@ -1,12 +1,16 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
-import { Text, View, Button, TouchableOpacity } from "react-native";
+// import React from "react";
+import * as React from 'react';
+import { IconButton } from 'react-native-paper';
+import { Text, View } from "react-native";
 import styles from "../Styles/styles";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 const Profile = ({ navigation }) => {
   return (
     <View style={styles.container}>
+      <StatusBar style="auto" />
+      {/* HEADER */}
       <View style={styles.header}>
         <Text style={styles.label1} name="label1">
           username
@@ -18,24 +22,30 @@ const Profile = ({ navigation }) => {
           XP
         </Text>
       </View>
-      <View style={styles.shopContainer}>
+      {/* CHARACTER IMG  */}
+      <View style={styles.characterContainer}>
         <Text>Open up Profile.js to start working on your app!</Text>
-        <View style={styles.moneyLabel}>
-          <Icon name="account-balance-wallet" size={28} />
-          <Text>Currency </Text>
-        </View>
-        {/* <TouchableOpacity style={styles.shopButton} onPress={()=>navigation.navigate("MyModal")}>
-          <Icon name="store" size={36}/>
-        </TouchableOpacity> */}
-        <Icon
+      </View>
+      {/* BALANCE | SHOP */}
+      <View
+      style={styles.shopContainer}>
+        <IconButton
+          style={styles.moneyLabel}
+          icon="wallet"
+          size={32}
+          onPress={()=> alert("Your money")}
+        >
+        </IconButton>
+        <IconButton
           style={styles.shopButton}
-          name="store"
-          size={36}
+          icon="store"
+          size={32}
           onPress={() => navigation.navigate("MyModal")}
         />
-        <StatusBar style="auto" />
       </View>
+
     </View>
+    
   );
   function onImcPress() {
     //navigation.navigate("");
