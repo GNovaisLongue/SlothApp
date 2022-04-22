@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "FitPlus",
-    "slug": "FitPlus",
+    "name": "SlothApp",
+    "slug": "SlothApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

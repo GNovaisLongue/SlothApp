@@ -13,7 +13,7 @@ import styles from "../Styles/styles";
 
 const SignUp = ({navigation}) => {
   return (
-    <KeyboardAvoidingView style={styles.containerView} behavior="padding">
+    <KeyboardAvoidingView style={styles.container} behavior="padding">
       <TouchableWithoutFeedback>
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>

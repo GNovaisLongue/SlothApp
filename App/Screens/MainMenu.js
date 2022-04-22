@@ -24,7 +24,7 @@ const MainMenu = ({ navigation }) => {
       </View>
       {/* CHARACTER IMG  */}
       <View style={styles.characterContainer}>
-        <Text>Open up MainMenu.js to start working on your app!</Text>
+        <Text>Open up MainMenu.js</Text>
       </View>
       {/* BALANCE | SHOP */}
       <View

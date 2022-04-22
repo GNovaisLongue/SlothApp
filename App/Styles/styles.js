@@ -7,32 +7,49 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  //Login.js
   loginScreenContainer: {
     flex: 1,
-  },
-  logoText: {
-    fontSize: 40,
-    fontWeight: "800",
-    marginTop: 150,
-    marginBottom: 30,
-    textAlign: "center",
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
   },
   loginFormView: {
     flex: 1,
   },
+  loginLogoText: {
+    fontSize: 40,
+    fontWeight: "800",
+    marginTop: "2%",
+    marginBottom: "10%",
+    textAlign: "center",
+  },
+  loginText: {
+    color: "#ffffff",
+    fontSize: 18,
+    fontWeight: "600",
+    textAlign: "center",
+  },
   loginFormTextInput: {
+    width: "85%",
     height: 43,
     fontSize: 14,
     borderRadius: 5,
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: "#eaeaea",
     backgroundColor: "#fafafa",
-    paddingLeft: 10,
-    marginLeft: 15,
-    marginRight: 15,
-    marginTop: 5,
-    marginBottom: 5,
+    padding: 10,
+    marginTop: 15,
   },
+  loginButton: {
+    height: 43,
+    width: "85%",
+    backgroundColor: "#3897f1",
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 15,
+  },
+
   //BottomTabs.js
   bottomTabNavigator: {
     color: "#19A04FB5",
@@ -70,7 +87,7 @@ export default StyleSheet.create({
   shopContainer: {
     flex: 1,
     width: "98%",
-    flexDirection : "row",
+    flexDirection: "row",
     backgroundColor: "skyblue",
     justifyContent: "space-between",
   },
@@ -118,7 +135,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     alignSelf: "center",
-    marginBottom: 10,
+    marginBottom: 5,
   },
   buttonModal: {
     width: "20%",
@@ -139,10 +156,17 @@ export default StyleSheet.create({
   },
   itemRenderModal: {
     flexDirection: "row",
-    paddingVertical: 15,
+    padding: 5,
+    backgroundColor: "steelblue",
+  },
+  itemData: {
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
   itemLogo: {
-    padding: 10,
+    padding: 50,
+    backgroundColor: "skyblue",
   },
   itemImage: {
     width: 50,
@@ -150,8 +174,9 @@ export default StyleSheet.create({
   },
   itemBody: {
     flex: 1,
-    paddingHorizontal: 10,
+    padding: 5,
     justifyContent: "center",
+    backgroundColor: "silver",
   },
   itemName: {
     fontWeight: "bold",
@@ -161,16 +186,26 @@ export default StyleSheet.create({
     backgroundColor: "green",
     paddingHorizontal: 6,
     justifyContent: "center",
-    right: 12,
+    backgroundColor: "gold",
+  },
+  modalcontainer: {
+    flex: 1,
+  },
+  modalItemType: {
+    padding: 10,
+    marginVertical: 8,
+    marginHorizontal: 4,
+  },
+  modalItem: {
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+  },
+  modalTitle: {
+    fontSize: 32,
   },
 
   //
-  loginButton: {
-    backgroundColor: "#3897f1",
-    borderRadius: 5,
-    height: "40%",
-    marginTop: 10,
-  },
   teacherCards: {
     width: "50%",
     height: "40",

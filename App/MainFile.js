@@ -30,7 +30,7 @@ export default function MainFile() {
         name="Home"
         component={rootStack}
         options={{
-          title: "",
+          title: "Home",
           headerShown: false,
         }}
       />

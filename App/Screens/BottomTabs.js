@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 import { MainMenu, Classes, Settings, Notifications, Modal } from "./Index";
-import styles from "../Styles/styles";
 
 const Tab = createMaterialBottomTabNavigator(); //Android
 //const Tab = createBottomTabNavigator(); //IOS
