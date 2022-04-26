@@ -3,6 +3,7 @@ import BottomTabs from "./Screens/BottomTabs";
 import { Login, SignUp, Modal } from "./Screens/Index";
 import { NavigationContainer, DarkTheme } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { Provider as PaperProvider } from "react-native-paper";
 
 const Stack = createStackNavigator();
 const RootStack = createStackNavigator();
@@ -53,5 +54,9 @@ export default function MainFile() {
       </RootStack.Navigator>
     );
   };
-  return <NavigationContainer>{loginStack()}</NavigationContainer>;
+  return (
+    <PaperProvider>
+      <NavigationContainer>{loginStack()}</NavigationContainer>
+    </PaperProvider>
+  );
 }

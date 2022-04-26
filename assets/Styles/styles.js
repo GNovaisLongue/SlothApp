@@ -4,9 +4,11 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
+    marginHorizontal: 10,
   },
+
   //Login.js
   loginScreenContainer: {
     flex: 1,
@@ -54,20 +56,21 @@ export default StyleSheet.create({
   bottomTabNavigator: {
     color: "#19A04FB5",
   },
-  //Profile.js
-  label1: {
+
+  //MainMenu.js
+  mainMenuLabel1: {
     position: "absolute",
     left: "10%",
   },
-  label2: {
+  mainMenuLabel2: {
     position: "absolute",
     right: "10%",
   },
-  label3: {
+  mainMenuLabel3: {
     position: "absolute",
     alignContent: "center",
   },
-  header: {
+  mainMenuHeader: {
     width: "100%",
     height: "12%",
     alignItems: "center",
@@ -75,7 +78,7 @@ export default StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#19A04FB5",
   },
-  characterContainer: {
+  mainMenuCharacterContainer: {
     flex: 5,
     backgroundColor: "powderblue",
     width: "98%",
@@ -84,20 +87,20 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  shopContainer: {
+  mainMenuShopContainer: {
     flex: 1,
     width: "98%",
     flexDirection: "row",
     backgroundColor: "skyblue",
     justifyContent: "space-between",
   },
-  moneyLabel: {
+  mainMenuMoneyLabel: {
     alignSelf: "center",
     backgroundColor: "silver",
   },
-  shopButton: {
+  mainMenuShopButton: {
     alignSelf: "center",
-    backgroundColor: "silver",
+    backgroundColor: "gray",
   },
   // moneyLabel: {
   //   position: "relative",
@@ -130,6 +133,7 @@ export default StyleSheet.create({
   //   shadowRadius: 10,
   //   shadowOpacity: 0.35,
   // },
+
   //Modal.js - store
   listModal: {
     flexDirection: "row",
@@ -205,7 +209,7 @@ export default StyleSheet.create({
     fontSize: 32,
   },
 
-  //
+  //Classes.js
   teacherCards: {
     width: "50%",
     height: "40",
@@ -215,5 +219,19 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  //settings.js
+  settingsItem: {
+    backgroundColor: "#f9c2ff",
+    padding: 10,
+    marginVertical: 5,
+  },
+  settingsHeader: {
+    fontSize: 32,
+    backgroundColor: "#fff",
+  },
+  settingsTitle: {
+    fontSize: 24,
   },
 });

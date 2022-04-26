@@ -1,14 +1,52 @@
-import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Button, Text, View } from "react-native";
-import styles from "../Styles/styles"
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+  SectionList,
+  Pressable,
+} from "react-native";
+import styles from "../../assets/Styles/styles";
+
+const DATA = [
+  {
+    title: "Login",
+    data: ["Button 1", "Button 2"],
+  },
+  {
+    title: "Theme",
+    data: ["Button 1"],
+  },
+  {
+    title: "Privacy",
+    data: ["Button 1", "Button 2", "Button 3"],
+  },
+  {
+    title: "About Me",
+    data: ["button 1", "Button 2"],
+  },
+];
+
+const Item = ({ title }) => (
+  <View style={styles.settingsItem}>
+    <Pressable style={styles.loginButton} onPress={() => {}}>
+      <Text style={styles.settingsTitle}>{title}</Text>
+    </Pressable>
+  </View>
+);
 
 const Settings = () => {
   return (
     <View style={styles.container}>
-      <Text>Tab 1 - Settings</Text>
-      <Text>Open up Settings.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <SectionList
+        sections={DATA}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({ item }) => <Item title={item} />}
+        renderSectionHeader={({ section: { title } }) => (
+          <Text style={styles.settingsHeader}>{title}</Text>
+        )}
+      />
     </View>
   );
 };

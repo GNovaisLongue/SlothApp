@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import styles from "../Styles/styles";
+import styles from "../../assets/Styles/styles";
 
 const listModal = [
   {
@@ -166,88 +166,5 @@ const Modal = () => {
     </SafeAreaView>
   );
 };
-
-// const Item = ({ item, onPress, backgroundColor, textColor }) => (
-//   <TouchableOpacity
-//     onPress={onPress}
-//     style={[styles.itemData, backgroundColor]}
-//   >
-//     <Text style={[styles.itemName, textColor]}>{item.name}</Text>
-//   </TouchableOpacity>
-// );
-
-// const Modal = () => {
-//   const [status, setStatus] = useState("All");
-//   const [datalist, setDataList] = useState(data);
-
-//   const setStatusFilter = (status) => {
-//     if (status !== "All") {
-//       setDataList([...data.filter((e) => e.status === status)]);
-//     } else {
-//       setDataList(data);
-//     }
-//     setStatus(status);
-//   };
-
-//   const renderItem = ({ item, index }) => {
-//     return (
-//       <View key={index} style={styles.itemRenderModal}>
-//         <View style={styles.itemLogo}>
-//           {/* <Image
-//             style={styles.itemImage}
-//             source={{uri:}}
-//           /> */}
-//         </View>
-//         {/* data.item.name */}
-//         <View style={styles.itemBody}>
-//           <Text style={styles.itemName}>{item.name}</Text>
-//         </View>
-//         {/* data.item.status */}
-//         <View
-//           style={[
-//             styles.itemStatus,
-//             {
-//               backgroundColor: item.status === "Feet" ? "#e5848e" : "#69c080",
-//             },
-//           ]}
-//         >
-//           <Text>{item.status}</Text>
-//         </View>
-//       </View>
-//     );
-//   };
-
-//   return (
-//     <SafeAreaView>
-//       <View>
-//         <View style={styles.listModal}>
-//           {listModal.map((e) => (
-//             <TouchableOpacity
-//               style={[
-//                 styles.buttonModal,
-//                 status === e.status && styles.buttonModalActive,
-//               ]}
-//               onPress={() => setStatusFilter(e.status)}
-//             >
-//               <Text
-//                 style={[
-//                   styles.textModal,
-//                   status === e.status && styles.textModalActive,
-//                 ]}
-//               >
-//                 {e.status}
-//               </Text>
-//             </TouchableOpacity>
-//           ))}
-//         </View>
-//       </View>
-//       <FlatList
-//         data={datalist}
-//         keyExtractor={(e, i) => i.toString()}
-//         renderItem={renderItem}
-//       />
-//     </SafeAreaView>
-//   );
-// };
 
 export default Modal;

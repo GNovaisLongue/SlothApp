@@ -13,7 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 // import Discord from "../Routes/Discord";
 
-import styles from "../Styles/styles";
+import styles from "../../assets/Styles/styles";
 
 const Login = () => {
   const navigation = useNavigation();
