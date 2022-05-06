@@ -50,7 +50,7 @@ export default function MainFile() {
             headerShown: false,
           }}
         />
-        <RootStack.Screen name="MyModal" component={Modal} />
+        <RootStack.Screen name="ModalStore" component={Modal} />
       </RootStack.Navigator>
     );
   };

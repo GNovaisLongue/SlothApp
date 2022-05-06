@@ -37,7 +37,7 @@ const MainMenu = ({ navigation }) => {
           color="black"
           icon="store"
           size={32}
-          onPress={() => navigation.navigate("MyModal")}
+          onPress={() => navigation.navigate("ModalStore")}
         />
       </View>
     </View>

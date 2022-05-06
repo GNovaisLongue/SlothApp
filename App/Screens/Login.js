@@ -11,12 +11,30 @@ import {
   Pressable,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-// import Discord from "../Routes/Discord";
-
 import styles from "../../assets/Styles/styles";
+import axios from "axios";
+
+let QueryString = require("query-string");
 
 const Login = () => {
   const navigation = useNavigation();
+
+  const getAccessToken = async () => {
+    return await axios
+      .post(
+        "http://localhost:8080/login",
+        QueryString.stringify({
+          username: "Gaddini",
+          password: "123456",
+        })
+      )
+      .then((response) =>
+        localStorage.setItem("Access_token", response.data.access_token)
+      )
+      .catch((error) => console.log("GETTING TOKEN " + error));
+    // getTeachers(authToken);
+  };
+
   return (
     <View style={styles.loginScreenContainer}>
       <Text style={styles.loginLogoText}>A</Text>
@@ -55,6 +73,8 @@ const Login = () => {
     //if ok
     //window.location.href='https://discord.com/api/oauth2/authorize?client_id=845808880171876393&redirect_uri=http%3A%2F%2Flocalhost%3A19006%2Fauth%2Fredirect&response_type=code&scope=identify%20guilds';
     // console.log(window.location.href);
+    getAccessToken();
+    console.log(localStorage.getItem("Access_token"));
     navigation.navigate("Home");
   }
   function onSignInPress() {

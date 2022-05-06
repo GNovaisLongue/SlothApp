@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -16,10 +16,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import axios from "axios";
 
-let QueryString = require("query-string");
-
-//images
-import Blue_owl from "../../assets/Images/Blue_owl.png";
+// let QueryString = require("query-string");
 
 const teacherData = [
   {
@@ -64,41 +61,27 @@ const teacherData = [
   },
 ];
 
-// getAllActiveClasses() = async() =>{
-//   try{
-//     const response = await fetch('localhost:8080/activeClasses',{
-//       method: "GET",
-//       header: {'Authorization': 'Bearer '+ token}
-//     })
-//     return await response.json()
-
-//   }catch{
-//     alert("GET deu ruim")
-//     console.log("GET deu ruim")
-//   }
-// }
-
 //Card Component inside Flatlist for items
 const Cards = ({ item, onPress }) => (
   <Card style={{ display: "flex" }}>
     <CardActionArea onClick={onPress}>
       <Box style={{ display: "flex", flexDirection: "column" }}>
-        <CardContent style={{ flex: "1 0 auto" }}>
+        <CardContent style={{ flex: "2 1 auto" }}>
           <Typography component="div" variant="h5">
-            {item.name}
+            {item.classDesc}
           </Typography>
           <Typography
             variant="subtitle1"
             color="text.secondary"
             component="div"
           >
-            {item.id}
+            {item.language}
           </Typography>
         </CardContent>
       </Box>
       <CardMedia
         component="img"
-        style={{ width: 151 }}
+        style={{ flex: 1, width: 151 }}
         image={require("../../assets/Images/Blue_owl.png")}
         alt="Creepy Smile"
       />
@@ -108,38 +91,16 @@ const Cards = ({ item, onPress }) => (
 
 //main
 const Classes = ({ navigation }) => {
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
   const [teacherList, setTeacherList] = useState([]);
 
-  const getAccessToken = async () => {
-    try {
-      const response = await axios.post(
-        "http://localhost:8080/login",
-        QueryString.stringify({
-          username: "Gaddini",
-          password: "123456",
-        })
-      );
-      console.log("INSIDE POST " + response.data.access_token);
-      const token = response.data.access_token;
-      return await token;
-    } catch {
-      console.log("LOGIN DEU RUIM");
-    }
-    // getTeachers(authToken);
-  };
-
-  const getTeachers = (token) => {
+  const getTeachers = async (token) => {
     console.log("TOKEN " + token);
     axios
       .get("http://localhost:8080/activeClasses", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log(response);
+        setTeacherList(response.data);
       })
       .catch((error) => {
         console.log("ERROR " + error);
@@ -147,46 +108,37 @@ const Classes = ({ navigation }) => {
   };
 
   const renderItems = ({ item }) => {
-    // const backgroundColor =
-    //   item.id === selectedItem ? "steelblue" : "powderblue";
-    // const color = item.id === selectedItem ? "white" : "black";
     return (
       <Cards
         item={item}
         onPress={() => {
-          const authToken = getAccessToken();
-          console.log("PROMISE " + authToken);
-          getTeachers(authToken);
+          // getTeachers(AsyncStorage.getItem("Access_token"));
+          alert("YOU CLICKED ME");
         }}
-        // backgroundColor={{ backgroundColor }}
-        // textColor={{ color }}
       />
     );
   };
+
+  // getAccessToken();
+  useEffect(() => {
+    getTeachers(localStorage.getItem("Access_token"));
+  }, []);
 
   //Visual part
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Button
-          buttonStyle={styles.loginButton}
-          onPress={() => alert("classes cards")}
-          //onPress={() => navigation.navigate("SignUp")}
-          title="Teachers' cards"
-        />
         <Text>Schedule</Text>
         <Button
           buttonStyle={styles.loginButton}
           onPress={() => alert("calendar?")}
-          //onPress={() => navigation.navigate("SignUp")}
           title="Classes's Schedule"
         />
       </View>
       <FlatList
-        data={teacherData}
-        keyExtractor={(item) => item.id}
+        data={teacherList}
+        keyExtractor={(item, index) => item.id}
         renderItem={renderItems}
-        extraData={selectedItem}
       />
     </SafeAreaView>
   );
