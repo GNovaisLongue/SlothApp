@@ -15,60 +15,39 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import axios from "axios";
+import cx from "clsx";
 
 // let QueryString = require("query-string");
 
-const teacherData = [
-  {
-    name: "A1",
-    status: "Head",
-    id: "1",
-  },
-  {
-    name: "A2",
-    status: "Head",
-    id: "2",
-  },
-  {
-    name: "A3",
-    status: "Torso",
-    id: "3",
-  },
-  {
-    name: "A4",
-    status: "Torso",
-    id: "4",
-  },
-  {
-    name: "A5",
-    status: "Feet",
-    id: "5",
-  },
-  {
-    name: "A6",
-    status: "Feet",
-    id: "6",
-  },
-  {
-    name: "A7",
-    status: "Feet",
-    id: "7",
-  },
-  {
-    name: "A8",
-    status: "Background",
-    id: "8",
-  },
-];
-
 //Card Component inside Flatlist for items
 const Cards = ({ item, onPress }) => (
-  <Card style={{ display: "flex" }}>
+  <Card
+    // className={styles.classesCard}
+    sx={{
+      display: "flex",
+      padding: 1,
+      marginBottom: 0.5,
+      backgroundColor: "lightgray",
+    }}
+  >
+    <CardMedia
+      title="owl"
+      sx={{ width: 145, backgroundColor: "gray" }}
+      component="img"
+      image={require("../../assets/adaptive-icon.png")}
+      // style={styles.classesCardMediaImg}
+    />
     <CardActionArea onClick={onPress}>
-      <Box style={{ display: "flex", flexDirection: "column" }}>
-        <CardContent style={{ flex: "2 1 auto" }}>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "skyblue",
+        }}
+      >
+        <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
-            {item.classDesc}
+            {item.teacherId}
           </Typography>
           <Typography
             variant="subtitle1"
@@ -77,14 +56,22 @@ const Cards = ({ item, onPress }) => (
           >
             {item.language}
           </Typography>
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            component="div"
+          >
+            {item.classType}
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            color="text.secondary"
+            component="div"
+          >
+            {item.classDesc}
+          </Typography>
         </CardContent>
       </Box>
-      <CardMedia
-        component="img"
-        style={{ flex: 1, width: 151 }}
-        image={require("../../assets/Images/Blue_owl.png")}
-        alt="Creepy Smile"
-      />
     </CardActionArea>
   </Card>
 );
@@ -112,7 +99,6 @@ const Classes = ({ navigation }) => {
       <Cards
         item={item}
         onPress={() => {
-          // getTeachers(AsyncStorage.getItem("Access_token"));
           alert("YOU CLICKED ME");
         }}
       />
@@ -128,7 +114,6 @@ const Classes = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text>Schedule</Text>
         <Button
           buttonStyle={styles.loginButton}
           onPress={() => alert("calendar?")}
