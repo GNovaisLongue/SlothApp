@@ -20,7 +20,7 @@ import cx from "clsx";
 // let QueryString = require("query-string");
 
 //Card Component inside Flatlist for items
-const Cards = ({ item, onPress }) => (
+const TeacherCards = ({ item, onPress }) => (
   <Card
     // className={styles.classesCard}
     sx={{
@@ -81,7 +81,6 @@ const Classes = ({ navigation }) => {
   const [teacherList, setTeacherList] = useState([]);
 
   const getTeachers = async (token) => {
-    console.log("TOKEN " + token);
     axios
       .get("http://localhost:8080/activeClasses", {
         headers: { Authorization: `Bearer ${token}` },
@@ -96,7 +95,7 @@ const Classes = ({ navigation }) => {
 
   const renderItems = ({ item }) => {
     return (
-      <Cards
+      <TeacherCards
         item={item}
         onPress={() => {
           alert("YOU CLICKED ME");
@@ -105,18 +104,17 @@ const Classes = ({ navigation }) => {
     );
   };
 
-  // getAccessToken();
   useEffect(() => {
     getTeachers(localStorage.getItem("Access_token"));
   }, []);
-
-  //Visual part
   return (
     <SafeAreaView style={styles.container}>
       <View>
         <Button
           buttonStyle={styles.loginButton}
-          onPress={() => alert("calendar?")}
+          onPress={() => {
+            navigation.navigate("ModalCalendar");
+          }}
           title="Classes's Schedule"
         />
       </View>

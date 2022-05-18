@@ -3,7 +3,7 @@ import { createMaterialBottomTabNavigator } from "@react-navigation/material-bot
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-import { MainMenu, Classes, Settings, Notifications, Modal } from "./Index";
+import { MainMenu, Classes, Settings, UserProfile } from "./Index";
 
 const Tab = createMaterialBottomTabNavigator(); //Android
 //const Tab = createBottomTabNavigator(); //IOS
@@ -47,9 +47,9 @@ const BottomTabs = () => {
       />
       <Tab.Screen
         name="Notification"
-        component={Notifications}
+        component={UserProfile}
         options={{
-          tabBarLabel: "Notifications",
+          tabBarLabel: "UserProfile",
           tabBarIcon: ({ color }) => (
             <Icon name="notifications" color={color} size={26} />
           ),

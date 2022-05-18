@@ -1,7 +1,7 @@
 import React from "react";
 import BottomTabs from "./Screens/BottomTabs";
-import { Login, SignUp, Modal } from "./Screens/Index";
-import { NavigationContainer, DarkTheme } from "@react-navigation/native";
+import { Login, SignUp, ModalStore, ModalCalendar } from "./Screens/Index";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider as PaperProvider } from "react-native-paper";
 
@@ -50,7 +50,8 @@ export default function MainFile() {
             headerShown: false,
           }}
         />
-        <RootStack.Screen name="ModalStore" component={Modal} />
+        <RootStack.Screen name="ModalStore" component={ModalStore} />
+        <RootStack.Screen name="ModalCalendar" component={ModalCalendar} />
       </RootStack.Navigator>
     );
   };

@@ -4,9 +4,8 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-    // alignItems: "center",
     justifyContent: "center",
-    marginHorizontal: 10,
+    marginHorizontal: 8,
   },
 
   //Login.js
@@ -46,7 +45,7 @@ export default StyleSheet.create({
   loginButton: {
     height: 43,
     width: "85%",
-    backgroundColor: "#3897f1",
+    backgroundColor: "#3897F1",
     borderRadius: 5,
     padding: 10,
     marginTop: 15,
