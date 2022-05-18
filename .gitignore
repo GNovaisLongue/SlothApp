@@ -1,7 +1,7 @@
-/node_modules
+node_modules
 .expo
 .expo-shared
 .vscode
 .env
 package-lock.json
-/App/Services
+Services/*
