@@ -26,11 +26,11 @@ const listModal = [
     id: "s2",
   },
   {
-    itemType: "torso",
+    itemType: "body",
     id: "s3",
   },
   {
-    itemType: "feet",
+    itemType: "foot",
     id: "s4",
   },
   {
@@ -82,7 +82,7 @@ const data = [
   },
 ];
 
-let loadedItems = [];
+let loadedItems;
 
 //Component inside Flatlist for item type
 //Upper horizontal bar
@@ -97,7 +97,7 @@ const ModalStatus = ({ item, onPress, backgroundColor, textColor }) => (
 
 //Card Component inside Flatlist for items
 //vertical bar
-const ModalItems = ({ item, onPress, backgroundColor, textColor }) => (
+const ModalItems = ({ item, onPress }) => (
   <Card
     sx={{
       display: "flex",
@@ -156,29 +156,34 @@ const Modal = () => {
   const [itemsList, setItemsList] = useState(loadedItems);
 
   const getItems = async (token) => {
-    axios
+    await axios
       .get("http://localhost:8080/registeredItems", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        loadedItems.push(response.data);
-        // setItemsList(response.data);
+        loadedItems = [];
+        for (var i = 0; i < response.data.length; i++) {
+          loadedItems.push(response.data[i]);
+        }
+        setItemsList(loadedItems);
       })
       .catch((error) => {
         console.log("ERROR " + error);
       });
+    // console.log(loadedItems.length);
+    // console.log(loadedItems);
   };
   //
   //Filter between Status and Items
-  const setStatusFilter = ({ itemType }) => {
+  const setStatusFilter = ({ itemType, id }) => {
     if (itemType !== "all") {
-      setDataList([...data.filter((item) => item.itemType === itemType)]);
-      // setItemsList([...loadedItems.filter((item) => item.itemType === itemType),]);
+      setItemsList([
+        ...loadedItems.filter((item) => item.itemType === itemType),
+      ]);
     } else {
-      setDataList(data);
-      // setItemsList(itemsList);
+      setItemsList(loadedItems);
     }
-    setStatus(itemType);
+    setSelectedStatus(id);
   };
   //
   //selection of touchable Status -- horizontal bar
@@ -190,7 +195,6 @@ const Modal = () => {
       <ModalStatus
         item={item}
         onPress={() => {
-          setSelectedStatus(item.id);
           setStatusFilter(item);
         }}
         backgroundColor={{ backgroundColor }}
@@ -204,21 +208,17 @@ const Modal = () => {
     return (
       <ModalItems
         item={item}
-        // onPress={() => setSelectedItem(item.id)}
         onPress={() => {
           alert("modal item clicked");
-          console.log("ITEMS " + loadedItems);
         }}
-        // backgroundColor={{ backgroundColor }}
-        // textColor={{ color }}
       />
     );
   };
 
+  //load before rendering
   useEffect(() => {
     getItems(localStorage.getItem("Access_token"));
-    console.log(itemsList);
-    console.log(loadedItems.length);
+    setStatusFilter({ itemType: "all", id: "s1" });
   }, []);
   return (
     <SafeAreaView style={styles.modalcontainer}>
@@ -228,11 +228,10 @@ const Modal = () => {
           keyExtractor={(item) => item.id}
           horizontal={true}
           renderItem={renderItemType}
-          extraData={selectedStatus}
         />
       </View>
       <FlatList
-        data={dataList}
+        data={itemsList}
         keyExtractor={(item, index) => item.registeredItemsId}
         renderItem={renderItems}
       />
