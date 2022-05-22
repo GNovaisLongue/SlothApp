@@ -105,7 +105,7 @@ const Classes = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getTeachers(localStorage.getItem("Access_token"));
+    getTeachers(sessionStorage.getItem("Access_token"));
   }, []);
   return (
     <SafeAreaView style={styles.container}>

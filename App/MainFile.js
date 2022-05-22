@@ -1,4 +1,5 @@
 import React from "react";
+import { NativeBaseProvider } from "native-base";
 import BottomTabs from "./Screens/BottomTabs";
 import { Login, SignUp, ModalStore, ModalCalendar } from "./Screens/Index";
 import { NavigationContainer } from "@react-navigation/native";
@@ -56,8 +57,10 @@ export default function MainFile() {
     );
   };
   return (
-    <PaperProvider>
-      <NavigationContainer>{loginStack()}</NavigationContainer>
-    </PaperProvider>
+    <NativeBaseProvider>
+      <PaperProvider>
+        <NavigationContainer>{loginStack()}</NavigationContainer>
+      </PaperProvider>
+    </NativeBaseProvider>
   );
 }

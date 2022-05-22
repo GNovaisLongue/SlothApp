@@ -1,15 +1,6 @@
 import { NavigationHelpersContext } from "@react-navigation/core";
 import React from "react";
-import {
-  Keyboard,
-  Text,
-  View,
-  TextInput,
-  TouchableWithoutFeedback,
-  KeyboardAvoidingView,
-  Button,
-  Pressable,
-} from "react-native";
+import { Keyboard, Text, View, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../../assets/Styles/styles";
 import axios from "axios";
@@ -29,7 +20,7 @@ const Login = () => {
         })
       )
       .then((response) =>
-        localStorage.setItem("Access_token", response.data.access_token)
+        sessionStorage.setItem("Access_token", response.data.access_token)
       )
       .catch((error) => console.log("GETTING TOKEN " + error));
     // getTeachers(authToken);
@@ -74,7 +65,7 @@ const Login = () => {
     //window.location.href='https://discord.com/api/oauth2/authorize?client_id=845808880171876393&redirect_uri=http%3A%2F%2Flocalhost%3A19006%2Fauth%2Fredirect&response_type=code&scope=identify%20guilds';
     // console.log(window.location.href);
     getAccessToken();
-    console.log(localStorage.getItem("Access_token"));
+    console.log(sessionStorage.getItem("Access_token"));
     navigation.navigate("Home");
   }
   function onSignInPress() {

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import * as React from "react";
 import { IconButton } from "react-native-paper";
 import { Text, View } from "react-native";
 import styles from "../../assets/Styles/styles";
@@ -26,11 +25,12 @@ const MainMenu = ({ navigation }) => {
       {/* BALANCE | SHOP */}
       <View style={styles.mainMenuShopContainer}>
         <IconButton
+          disabled={false}
           style={styles.mainMenuMoneyLabel}
           color="black"
           icon="bag-personal"
           size={32}
-          onPress={() => alert("Your money")}
+          onPress={() => localStorage.removeItem("Inventory")}
         ></IconButton>
         <IconButton
           style={styles.mainMenuShopButton}
@@ -42,9 +42,6 @@ const MainMenu = ({ navigation }) => {
       </View>
     </View>
   );
-  function onPressFunction() {
-    //navigation.navigate("");
-  }
 };
 
 export default MainMenu;

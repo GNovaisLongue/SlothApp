@@ -5,7 +5,7 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
     justifyContent: "center",
-    marginHorizontal: 8,
+    marginHorizontal: 4,
   },
 
   //Login.js
@@ -80,7 +80,7 @@ export default StyleSheet.create({
   mainMenuCharacterContainer: {
     flex: 5,
     backgroundColor: "powderblue",
-    width: "98%",
+    width: "100%",
     padding: 5,
     marginTop: 5,
     alignItems: "center",
@@ -88,7 +88,7 @@ export default StyleSheet.create({
   },
   mainMenuShopContainer: {
     flex: 1,
-    width: "98%",
+    width: "100%",
     flexDirection: "row",
     backgroundColor: "skyblue",
     justifyContent: "space-between",
@@ -102,7 +102,7 @@ export default StyleSheet.create({
     backgroundColor: "gray",
   },
 
-  //Modal.js - store
+  //ModalStore.js - store
   listModal: {
     flexDirection: "row",
     width: "100%",
@@ -160,9 +160,6 @@ export default StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "gold",
   },
-  modalcontainer: {
-    flex: 1,
-  },
   modalItemType: {
     padding: 10,
     marginVertical: 8,
@@ -175,6 +172,41 @@ export default StyleSheet.create({
   },
   modalTitle: {
     fontSize: 32,
+  },
+  //ModalPopUp - Inside ModalStore.js
+  modalPopupBackground: {
+    flex: 1,
+    backgroundColor: "#FFFFFFA6",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalPopupContainer: {
+    width: "80%",
+    backgroundColor: "#ffffff",
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    borderRadius: 15,
+    elevation: 20,
+  },
+  modalPopupHeader: {
+    width: "100%",
+    height: 40,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  modalPopupButton: {
+    height: 43,
+    width: "85%",
+    backgroundColor: "#19A04FB5",
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 15,
+  },
+  modalPopupText: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "600",
+    textAlign: "center",
   },
 
   //Classes.js
@@ -226,7 +258,7 @@ export default StyleSheet.create({
   },
   settingsHeader: {
     fontSize: 32,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
   },
   settingsTitle: {
     fontSize: 24,
