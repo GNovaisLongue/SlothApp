@@ -16,7 +16,7 @@ export default function MainFile() {
         name="Login"
         component={Login}
         options={{
-          title: "LoginScreen",
+          title: "Login",
           headerShown: false,
         }}
       />
@@ -24,7 +24,7 @@ export default function MainFile() {
         name="SignUp"
         component={SignUp}
         options={{
-          title: "SignUpScreen",
+          title: "SignUp",
           headerShown: false,
         }}
       />
@@ -36,7 +36,6 @@ export default function MainFile() {
           headerShown: false,
         }}
       />
-      {/* <Stack.Screen name="Login with Google" component={ApiGoogle} /> */}
     </Stack.Navigator>
   );
 

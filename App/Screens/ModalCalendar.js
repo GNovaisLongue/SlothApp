@@ -1,62 +1,89 @@
-import React from "react";
-import {
-  Container,
-  Content,
-  Left,
-  Right,
-  Header,
-  Button,
-  Icon,
-  Body,
-  Title,
-  Text,
-} from "native-base";
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Dimensions,
-  ActivityIndicator,
-  Platform,
-} from "react-native";
-// import styles from "../../assets/Styles/styles";
-import _ from "lodash";
-// import I18n from "react-native-i18n";
-import Calendar from "@ericz1803/react-google-calendar";
-import { css } from "@emotion/react";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { Agenda } from "react-native-calendars";
+import { Card, Avatar } from "react-native-paper";
+import Typography from "@mui/material/Typography";
+// import { format } from "date-fns";
 
-const API_KEY = "AIzaSyARiB5ib1KWqRYpAIVQmjH3ZxB1dtrH1r8";
-let calendars = [
-  {
-    calendarId: "vf9pau70m5111ua76eu9tog538@group.calendar.google.com",
-  },
-];
-let styles = {
-  //you can use object styles (no import required)
-  calendar: {
-    borderWidth: "3px", //make outer edge of calendar thicker
-  },
-  /* highlight today by making the text red and giving it a red border */
-  today: {
-    color: "red",
-    border: "4px",
-  },
-};
-
-const language = "EN";
+var datefns = require("date-fns");
 
 const ModalCalendar = () => {
+  const [items, setItems] = useState({});
+  const [currentDay, setCurrentDay] = useState("");
+
+  const getCurrentDate = () => {
+    let today = datefns.format(new Date(), "yyyy-MM-dd");
+    // let today = "27/05/2022";
+    setCurrentDay(today);
+    console.log("FUNCTION");
+    console.log(today);
+    console.log(currentDay);
+  };
+  const timeToString = (time) => {
+    const date = new Date(time);
+    return date.toISOString().split("T")[0];
+  };
+
+  const loadItems = (day) => {
+    setTimeout(() => {
+      for (let i = -15; i < 85; i++) {
+        const time = day.timestamp + i * 24 * 60 * 60 * 1000;
+        const strTime = timeToString(time);
+        if (!items[strTime]) {
+          items[strTime] = [];
+          const numItems = Math.floor(Math.random() * 3 + 1);
+          for (let j = 0; j < numItems; j++) {
+            items[strTime].push({
+              name: "Item for " + strTime + " #" + j,
+              height: Math.max(50, Math.floor(Math.random() * 150)),
+            });
+          }
+        }
+      }
+      const newItems = {};
+      Object.keys(items).forEach((key) => {
+        newItems[key] = items[key];
+      });
+      setItems(newItems);
+    }, 1000);
+  };
+
+  const renderItem = (item) => {
+    return (
+      <TouchableOpacity style={{ marginRight: 10, marginTop: 15 }}>
+        <Card>
+          <Card.Content>
+            <View
+              style={{
+                backgroundColor: "skyblue",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Typography>{item.name}</Typography>
+              <Avatar.Text label="J" />
+            </View>
+          </Card.Content>
+        </Card>
+      </TouchableOpacity>
+    );
+  };
+
+  useEffect(() => {
+    getCurrentDate();
+    console.log("CONSOLE LOG");
+    console.log(currentDay);
+  }, []);
+
   return (
-    <View style={{ flex: 1, justifyContent: "center" }}>
-      <Text>Tab 1 - ModalCalendar.js</Text>
-      <View>
-        <Calendar
-          apiKey={API_KEY}
-          calendars={calendars}
-          styles={styles}
-          language={language}
-        />
-      </View>
+    <View style={{ flex: 1 }}>
+      <Agenda
+        items={items}
+        loadItemsForMonth={loadItems}
+        selected={"2022/05/27"}
+        renderItem={renderItem}
+      />
     </View>
   );
 };

@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useInsertionEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
   SafeAreaView,
   TouchableOpacity,
   FlatList,
+  Modal,
+  Pressable,
 } from "react-native";
 import styles from "../../assets/Styles/styles";
 import Box from "@mui/material/Box";
@@ -13,8 +15,8 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
+import { IconButton } from "react-native-paper";
 import axios from "axios";
-import cx from "clsx";
 
 const listModal = [
   {
@@ -30,62 +32,33 @@ const listModal = [
     id: "s3",
   },
   {
-    itemType: "foot",
+    itemType: "hand",
     id: "s4",
   },
   {
-    itemType: "background",
+    itemType: "foot",
     id: "s5",
   },
-];
-
-const data = [
   {
-    name: "A1",
-    itemType: "head",
-    id: "1",
-  },
-  {
-    name: "A2",
-    itemType: "head",
-    id: "2",
-  },
-  {
-    name: "A3",
-    itemType: "torso",
-    id: "3",
-  },
-  {
-    name: "A4",
-    itemType: "torso",
-    id: "4",
-  },
-  {
-    name: "A5",
-    itemType: "feet",
-    id: "5",
-  },
-  {
-    name: "A6",
-    itemType: "feet",
-    id: "6",
-  },
-  {
-    name: "A7",
-    itemType: "feet",
-    id: "7",
-  },
-  {
-    name: "A8",
     itemType: "background",
-    id: "8",
+    id: "s6",
   },
 ];
 
-let loadedItems;
+let loadedItems; //IMPORTANT
 
-//Component inside Flatlist for item type
-//Upper horizontal bar
+//Modal popup during purchase
+const ModalPopUp = ({ visible, children }) => {
+  return (
+    <Modal transparent visible={visible}>
+      <View style={styles.modalPopupBackground}>
+        <View style={styles.modalPopupContainer}>{children}</View>
+      </View>
+    </Modal>
+  );
+};
+
+//Component inside Flatlist for item type. Upper horizontal bar
 const ModalStatus = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity
     onPress={onPress}
@@ -95,8 +68,7 @@ const ModalStatus = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
-//Card Component inside Flatlist for items
-//vertical bar
+//Card Component inside Flatlist for items. Vertical bar
 const ModalItems = ({ item, onPress }) => (
   <Card
     sx={{
@@ -123,21 +95,21 @@ const ModalItems = ({ item, onPress }) => (
       >
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
-            {item.itemName}
+            {item.item_name} ({item.registered_items_id})
           </Typography>
           <Typography
             variant="subtitle1"
             color="text.secondary"
             component="div"
           >
-            {item.itemType}
+            {item.item_type}
           </Typography>
           <Typography
             variant="subtitle1"
             color="text.secondary"
             component="div"
           >
-            {item.itemPrice}
+            {item.item_price}
           </Typography>
         </CardContent>
       </Box>
@@ -146,39 +118,58 @@ const ModalItems = ({ item, onPress }) => (
 );
 
 //main
-const Modal = () => {
+const ModalStore = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
-  const [filterStatus, setStatus] = useState("All");
-  //static local data
-  const [dataList, setDataList] = useState(data);
   //DB data
   const [itemsList, setItemsList] = useState(loadedItems);
+  //ModalPopUp visibility
+  const [visible, setVisible] = useState(false);
+  //item data - ModalPopupContent and DB receive that data
+  const [registeredItemImageName, setRegisteredItemImageName] = useState("");
+  const [registeredItemType, setRegisteredItemType] = useState("");
+  const [registeredItemName, setRegisteredItemName] = useState("");
+  const [registeredItemId, setRegisteredItemId] = useState("");
+  const [registeredItemPrice, setRegisteredItemPrice] = useState("");
 
-  const getItems = async (token) => {
-    await axios
-      .get("http://localhost:8080/registeredItems", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
+  const getStoreItemsExpress = async () => {
+    axios
+      .get("http://localhost:19007/registeredItems")
       .then((response) => {
         loadedItems = [];
         for (var i = 0; i < response.data.length; i++) {
           loadedItems.push(response.data[i]);
         }
         setItemsList(loadedItems);
+        console.log("ITEMS LISTA SETADO");
       })
       .catch((error) => {
         console.log("ERROR " + error);
       });
-    // console.log(loadedItems.length);
-    // console.log(loadedItems);
   };
+
+  //check inv and add item
+  const checkUserInventory = async () => {
+    axios
+      .get("http://localhost:19007/registeredItems")
+      .then((response) => {
+        loadedItems = [];
+        for (var i = 0; i < response.data.length; i++) {
+          loadedItems.push(response.data[i]);
+        }
+        setItemsList(loadedItems);
+        console.log("ITEMS LISTA SETADO");
+      })
+      .catch((error) => {
+        console.log("ERROR " + error);
+      });
+  };
+
   //
   //Filter between Status and Items
   const setStatusFilter = ({ itemType, id }) => {
     if (itemType !== "all") {
       setItemsList([
-        ...loadedItems.filter((item) => item.itemType === itemType),
+        ...loadedItems.filter((item) => item.item_type === itemType),
       ]);
     } else {
       setItemsList(loadedItems);
@@ -209,7 +200,13 @@ const Modal = () => {
       <ModalItems
         item={item}
         onPress={() => {
-          alert("modal item clicked");
+          setRegisteredItemImageName(item.image_name);
+          setRegisteredItemName(item.item_name);
+          setRegisteredItemType(item.item_type);
+          setRegisteredItemId(item.registered_items_id);
+          setRegisteredItemPrice(item.item_price);
+          setVisible(true); // SHOW ModalPopupContent
+          console.log(item);
         }}
       />
     );
@@ -217,11 +214,12 @@ const Modal = () => {
 
   //load before rendering
   useEffect(() => {
-    getItems(localStorage.getItem("Access_token"));
+    // getItems(sessionStorage.getItem("Access_token"));
+    getStoreItemsExpress();
     setStatusFilter({ itemType: "all", id: "s1" });
   }, []);
   return (
-    <SafeAreaView style={styles.modalcontainer}>
+    <SafeAreaView style={styles.container}>
       <View>
         <FlatList
           data={listModal}
@@ -230,13 +228,39 @@ const Modal = () => {
           renderItem={renderItemType}
         />
       </View>
+      <ModalPopUp visible={visible}>
+        <View style={{ alignItems: "center" }}>
+          <View style={styles.modalPopupHeader}>
+            <IconButton
+              style={{ height: 30, width: 30 }}
+              color="black"
+              icon="window-close"
+              onPress={() => {
+                setVisible(false);
+              }}
+            />
+          </View>
+          <Text style={styles.modalPopupText}>
+            Are you sure you want to buy {registeredItemName}, ID{" "}
+            {registeredItemId} for {registeredItemPrice} ?
+          </Text>
+          <Pressable
+            style={styles.modalPopupButton}
+            onPress={() => {
+              checkUserInventory();
+            }}
+          >
+            <Text style={styles.loginText}>CONFIRM</Text>
+          </Pressable>
+        </View>
+      </ModalPopUp>
       <FlatList
         data={itemsList}
-        keyExtractor={(item, index) => item.registeredItemsId}
+        keyExtractor={(item, index) => item.registered_items_id}
         renderItem={renderItems}
       />
     </SafeAreaView>
   );
 };
 
-export default Modal;
+export default ModalStore;

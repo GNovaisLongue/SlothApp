@@ -1,29 +1,37 @@
-import { NavigationHelpersContext } from "@react-navigation/core";
-import React from "react";
-import { Keyboard, Text, View, TextInput, Pressable } from "react-native";
+import React, { useState } from "react";
+import { Text, View, TextInput, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../../assets/Styles/styles";
 import axios from "axios";
 
-let QueryString = require("query-string");
+const Login = ({ navigation }) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-const Login = () => {
-  const navigation = useNavigation();
-
-  const getAccessToken = async () => {
+  const getAccessExpress = async () => {
     return await axios
-      .post(
-        "http://localhost:8080/login",
-        QueryString.stringify({
-          username: "Gaddini",
-          password: "123456",
-        })
-      )
-      .then((response) =>
-        sessionStorage.setItem("Access_token", response.data.access_token)
-      )
-      .catch((error) => console.log("GETTING TOKEN " + error));
-    // getTeachers(authToken);
+      .post("http://localhost:19007/login", {
+        username: username,
+        password: password,
+      })
+      .then((response) => {
+        console.log("USUARIO LOGADO");
+        console.log(response.data);
+        if (response.data.message) {
+          alert(response.data.message);
+        }
+        if (response.data[0].username == username) {
+          sessionStorage.setItem("user_id", response.data.user_id);
+          console.log(response.data.user_id);
+          navigation.navigate("Home");
+          // sessionStorage.setItem("Access_token", response.data.access_token);
+        }
+      })
+      .catch((error) => {
+        if (error.data) {
+          alert(error.data.message);
+        }
+      });
   };
 
   return (
@@ -33,44 +41,35 @@ const Login = () => {
         placeholder="Username"
         placeholderColor="#c4c3cb"
         style={styles.loginFormTextInput}
+        onChangeText={setUsername}
       />
       <TextInput
         placeholder="Password"
         placeholderColor="#c4c3cb"
         style={styles.loginFormTextInput}
         secureTextEntry={true}
+        onChangeText={setPassword}
       />
-      <Pressable style={styles.loginButton} onPress={() => onLoginPress()}>
-        <Text style={styles.loginText}>Discord</Text>
+      <Pressable style={styles.loginButton} onPress={() => onLogin()}>
+        <Text style={styles.loginText}>Login</Text>
       </Pressable>
-      <Pressable style={styles.loginButton} onPress={() => onSignInPress()}>
-        <Text style={styles.loginText}>SignUp</Text>
+      <Pressable style={styles.loginButton} onPress={() => onSignIn()}>
+        <Text style={styles.loginText}>Sign Up</Text>
       </Pressable>
-      {/* <Button
-        Style={styles.loginButton}
-        onPress={() => onLoginPress()}
-        title="Discord"
-      />
-      <Button
-        style={styles.loginButton}
-        onPress={() => onSignInPress()}
-        title="SignUp"
-      /> */}
     </View>
   );
 
-  function onLoginPress() {
-    //auth - user e senha
-    //if ok
-    //window.location.href='https://discord.com/api/oauth2/authorize?client_id=845808880171876393&redirect_uri=http%3A%2F%2Flocalhost%3A19006%2Fauth%2Fredirect&response_type=code&scope=identify%20guilds';
-    // console.log(window.location.href);
-    getAccessToken();
-    console.log(sessionStorage.getItem("Access_token"));
-    navigation.navigate("Home");
+  function onLogin() {
+    if (username == "" || password == "") {
+      alert("1 ou mais campos vazios");
+    } else {
+      // getAccessExpress();
+      navigation.navigate("Home"); // temporario
+      // console.log(sessionStorage.getItem("Access_token"));
+    }
   }
-  function onSignInPress() {
-    //auth
-    //if ok
+
+  function onSignIn() {
     navigation.navigate("SignUp");
   }
 };

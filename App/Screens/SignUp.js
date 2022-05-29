@@ -1,17 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import {
-  Keyboard,
   Text,
   View,
   TextInput,
   TouchableWithoutFeedback,
   Alert,
   KeyboardAvoidingView,
-  Button,
+  Pressable,
 } from "react-native";
+import axios from "axios";
 import styles from "../../assets/Styles/styles";
 
-const SignUp = ({ navigation }) => {
+const SignUp = ({ navigation, route }) => {
+  const [usernameSignup, setUsernameSignup] = useState("");
+  const [passwordSignup, setPasswordSignup] = useState("");
+  const [userEmailSignup, setUserEmailSignup] = useState("");
+
+  const userRegisterExpress = async () => {
+    axios
+      .post("http://localhost:19007/register", {
+        username: usernameSignup,
+        user_email: userEmailSignup,
+        password: passwordSignup,
+      })
+      .then((response) => {
+        console.log("USUARIO REGISTRADO");
+        alert(response.data.message);
+        navigation.pop(); //remove from stack
+        navigation.navigate("Login"); //return to login screen
+      })
+      .catch((error) => {
+        console.log("ERROR " + error);
+      });
+  };
+
+  //main
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <TouchableWithoutFeedback>
@@ -21,39 +44,34 @@ const SignUp = ({ navigation }) => {
               placeholder="Username"
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
+              onChangeText={setUsernameSignup}
             />
             <TextInput
               placeholder="Email"
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
-            />
-            <TextInput
-              placeholder="Height"
-              placeholderColor="#c4c3cb"
-              style={styles.loginFormTextInput}
-            />
-            <TextInput
-              placeholder="Weight"
-              placeholderColor="#c4c3cb"
-              style={styles.loginFormTextInput}
+              onChangeText={setUserEmailSignup}
             />
             <TextInput
               placeholder="Password"
               placeholderColor="#c4c3cb"
               style={styles.loginFormTextInput}
               secureTextEntry={true}
+              onChangeText={setPasswordSignup}
             />
 
-            <Button
-              buttonStyle={styles.loginButton}
+            <Pressable
+              style={styles.loginButton}
               onPress={() => onSignUpPress()}
-              title="SignUp"
-            />
-            <Button
-              buttonStyle={styles.loginButton}
+            >
+              <Text style={styles.loginText}>Sign Up</Text>
+            </Pressable>
+            <Pressable
+              style={styles.loginButton}
               onPress={() => onCancelPress()}
-              title="Cancel"
-            />
+            >
+              <Text style={styles.loginText}>Cancel</Text>
+            </Pressable>
           </View>
         </View>
       </TouchableWithoutFeedback>
@@ -61,14 +79,13 @@ const SignUp = ({ navigation }) => {
   );
 
   function onSignUpPress() {
-    //auth
-    //if ok
-    navigation.pop(); //remove from stack
-    navigation.navigate("Home");
+    if (usernameSignup == "" || passwordSignup == "" || userEmailSignup == "") {
+      alert("1 ou mais campos vazios");
+    } else {
+      userRegisterExpress(); //add user to db
+    }
   }
   function onCancelPress() {
-    //auth
-    //if ok
     navigation.navigate("Login");
   }
 };
