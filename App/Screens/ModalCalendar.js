@@ -6,13 +6,13 @@ import Typography from "@mui/material/Typography";
 // import { format } from "date-fns";
 
 var datefns = require("date-fns");
+let today = datefns.format(new Date(), "yyyy-MM-dd");
 
 const ModalCalendar = () => {
   const [items, setItems] = useState({});
   const [currentDay, setCurrentDay] = useState("");
 
   const getCurrentDate = () => {
-    let today = datefns.format(new Date(), "yyyy-MM-dd");
     setCurrentDay(today);
     console.log("FUNCTION");
     console.log(today);
@@ -54,7 +54,7 @@ const ModalCalendar = () => {
           <Card.Content>
             <View
               style={{
-                backgroundColor: "skyblue",
+                backgroundColor: "silver",
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
@@ -80,7 +80,7 @@ const ModalCalendar = () => {
       <Agenda
         items={items}
         loadItemsForMonth={loadItems}
-        selected={"2022/05/27"}
+        selected={String(today)}
         renderItem={renderItem}
       />
     </View>

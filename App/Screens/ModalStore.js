@@ -153,7 +153,7 @@ const ModalStore = () => {
   };
 
   //check inv and add item
-  const checkUserInventory = async () => {
+  const checkUserInventory = async (item) => {
     //userInvInsert
     axios
       .post("http://localhost:19007/checkUserInv", {
@@ -164,7 +164,7 @@ const ModalStore = () => {
         if (response.data.result.length === 0) {
           //EDIT LATER - label delayed ---------------------------------
           setLabel(
-            `Are you sure you want to buy '${registeredItemName}', ID ${registeredItemId} for ${registeredItemPrice} ?`
+            `Are you sure you want to buy '${item.item_name}', ID ${item.registered_items_id} for ${item.item_price} ?`
           );
         } else {
           setLabel(response.data.message);
@@ -240,7 +240,7 @@ const ModalStore = () => {
           // SHOW ModalPopupContent
           setVisible(true);
           //Check if user already has item
-          checkUserInventory();
+          checkUserInventory(item);
           console.log(item);
         }}
       />
