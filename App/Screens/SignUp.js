@@ -24,7 +24,6 @@ const SignUp = ({ navigation, route }) => {
         password: passwordSignup,
       })
       .then((response) => {
-        console.log("USUARIO REGISTRADO");
         alert(response.data.message);
         navigation.pop(); //remove from stack
         navigation.navigate("Login"); //return to login screen

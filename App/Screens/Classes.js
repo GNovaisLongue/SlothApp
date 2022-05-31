@@ -16,7 +16,6 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import axios from "axios";
 
-// let QueryString = require("query-string");
 const classes = [
   {
     activeClassesId: 1,
@@ -159,25 +158,11 @@ const TeacherCards = ({ item, onPress }) => (
 const Classes = ({ navigation }) => {
   const [teacherList, setTeacherList] = useState([]);
 
-  const getTeachers = async (token) => {
-    axios
-      .get("http://localhost:8080/activeClasses", {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        setTeacherList(response.data);
-      })
-      .catch((error) => {
-        console.log("ERROR " + error);
-      });
-  };
   const getTeachersExpress = async () => {
     axios
       .get("http://localhost:19007/activeClasses")
       .then((response) => {
-        console.log(response.data);
         setTeacherList(response.data);
-        console.log("SETADO");
       })
       .catch((error) => {
         console.log("ERROR " + error);
@@ -196,7 +181,6 @@ const Classes = ({ navigation }) => {
   };
 
   useEffect(() => {
-    // getTeachers(sessionStorage.getItem("Access_token"));
     getTeachersExpress();
     // setTeacherList(classes); //local array
   }, []);

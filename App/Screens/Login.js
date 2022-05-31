@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 import styles from "../../assets/Styles/styles";
 import axios from "axios";
 
 const Login = ({ navigation }) => {
+  const [userData, setUserData] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -15,16 +15,14 @@ const Login = ({ navigation }) => {
         password: password,
       })
       .then((response) => {
-        console.log("USUARIO LOGADO");
-        console.log(response.data);
+        const newUser = response.data;
+        setUserData(newUser);
         if (response.data.message) {
           alert(response.data.message);
         }
-        if (response.data[0].username == username) {
-          sessionStorage.setItem("user_id", response.data.user_id);
-          console.log(response.data.user_id);
+        if (newUser[0].username == username) {
+          sessionStorage.setItem("user_id", newUser[0].user_id); //response.data[0].user_id
           navigation.navigate("Home");
-          // sessionStorage.setItem("Access_token", response.data.access_token);
         }
       })
       .catch((error) => {
@@ -63,9 +61,9 @@ const Login = ({ navigation }) => {
     if (username == "" || password == "") {
       alert("1 ou mais campos vazios");
     } else {
-      // getAccessExpress();
-      navigation.navigate("Home"); // temporario
-      // console.log(sessionStorage.getItem("Access_token"));
+      getAccessExpress(); //comment this and uncomment the other two below to skip login check
+      // sessionStorage.setItem("user_id", 1);
+      // navigation.navigate("Home");
     }
   }
 

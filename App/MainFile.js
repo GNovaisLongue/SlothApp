@@ -50,7 +50,11 @@ export default function MainFile() {
             headerShown: false,
           }}
         />
-        <RootStack.Screen name="ModalStore" component={ModalStore} />
+        <RootStack.Screen
+          name="ModalStore"
+          component={ModalStore}
+          options={{ title: "Sloth Store" }}
+        />
         <RootStack.Screen name="ModalCalendar" component={ModalCalendar} />
       </RootStack.Navigator>
     );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import { Agenda } from "react-native-calendars";
+import { AgendaListProps, AgendaProps, Agenda } from "react-native-calendars";
 import { Card, Avatar } from "react-native-paper";
 import Typography from "@mui/material/Typography";
 // import { format } from "date-fns";
@@ -13,7 +13,6 @@ const ModalCalendar = () => {
 
   const getCurrentDate = () => {
     let today = datefns.format(new Date(), "yyyy-MM-dd");
-    // let today = "27/05/2022";
     setCurrentDay(today);
     console.log("FUNCTION");
     console.log(today);

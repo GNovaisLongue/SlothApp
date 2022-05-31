@@ -45,7 +45,7 @@ const listModal = [
   },
 ];
 
-let loadedItems; //IMPORTANT
+let loadedItems; //IMPORTANT Array
 
 //Modal popup during purchase
 const ModalPopUp = ({ visible, children }) => {
@@ -122,15 +122,21 @@ const ModalStore = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   //DB data
   const [itemsList, setItemsList] = useState(loadedItems);
+  const [isAdded, setIsAdded] = useState([]);
   //ModalPopUp visibility
   const [visible, setVisible] = useState(false);
   //item data - ModalPopupContent and DB receive that data
+  const [userId, setUserId] = useState("");
   const [registeredItemImageName, setRegisteredItemImageName] = useState("");
   const [registeredItemType, setRegisteredItemType] = useState("");
   const [registeredItemName, setRegisteredItemName] = useState("");
   const [registeredItemId, setRegisteredItemId] = useState("");
   const [registeredItemPrice, setRegisteredItemPrice] = useState("");
+  //button text - if user already has item or not
+  const [hasItem, setHasItem] = useState(false);
+  const [buttonLabel, setLabel] = useState("");
 
+  //Load Store
   const getStoreItemsExpress = async () => {
     axios
       .get("http://localhost:19007/registeredItems")
@@ -140,7 +146,6 @@ const ModalStore = () => {
           loadedItems.push(response.data[i]);
         }
         setItemsList(loadedItems);
-        console.log("ITEMS LISTA SETADO");
       })
       .catch((error) => {
         console.log("ERROR " + error);
@@ -149,15 +154,41 @@ const ModalStore = () => {
 
   //check inv and add item
   const checkUserInventory = async () => {
+    //userInvInsert
     axios
-      .get("http://localhost:19007/registeredItems")
+      .post("http://localhost:19007/checkUserInv", {
+        user_id: userId,
+        registered_items_id: registeredItemId,
+      })
       .then((response) => {
-        loadedItems = [];
-        for (var i = 0; i < response.data.length; i++) {
-          loadedItems.push(response.data[i]);
+        if (response.data.result.length === 0) {
+          //EDIT LATER - label delayed ---------------------------------
+          setLabel(
+            `Are you sure you want to buy '${registeredItemName}', ID ${registeredItemId} for ${registeredItemPrice} ?`
+          );
+        } else {
+          setLabel(response.data.message);
+          setHasItem(true);
         }
-        setItemsList(loadedItems);
-        console.log("ITEMS LISTA SETADO");
+      })
+      .catch((error) => {
+        console.log("ERROR " + error);
+      });
+  };
+
+  //check money and buy item
+  const checkUserMoney = async () => {
+    axios
+      .post("http://localhost:19007/transaction", {
+        user_id: userId,
+        image_name: registeredItemImageName,
+        item_name: registeredItemName,
+        item_type: registeredItemType,
+        registered_items_id: registeredItemId,
+      })
+      .then((response) => {
+        alert(response.data.message);
+        setVisible(false);
       })
       .catch((error) => {
         console.log("ERROR " + error);
@@ -200,12 +231,16 @@ const ModalStore = () => {
       <ModalItems
         item={item}
         onPress={() => {
+          //pass item values to modal
           setRegisteredItemImageName(item.image_name);
           setRegisteredItemName(item.item_name);
           setRegisteredItemType(item.item_type);
           setRegisteredItemId(item.registered_items_id);
           setRegisteredItemPrice(item.item_price);
-          setVisible(true); // SHOW ModalPopupContent
+          // SHOW ModalPopupContent
+          setVisible(true);
+          //Check if user already has item
+          checkUserInventory();
           console.log(item);
         }}
       />
@@ -214,10 +249,11 @@ const ModalStore = () => {
 
   //load before rendering
   useEffect(() => {
-    // getItems(sessionStorage.getItem("Access_token"));
+    setUserId(sessionStorage.getItem("user_id"));
     getStoreItemsExpress();
     setStatusFilter({ itemType: "all", id: "s1" });
   }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -240,17 +276,18 @@ const ModalStore = () => {
               }}
             />
           </View>
-          <Text style={styles.modalPopupText}>
-            Are you sure you want to buy {registeredItemName}, ID{" "}
-            {registeredItemId} for {registeredItemPrice} ?
-          </Text>
+          <Text style={styles.modalPopupText}>{buttonLabel}</Text>
           <Pressable
+            disabled={hasItem}
             style={styles.modalPopupButton}
             onPress={() => {
-              checkUserInventory();
+              // checkUserInventory();
+              checkUserMoney();
             }}
           >
-            <Text style={styles.loginText}>CONFIRM</Text>
+            <Text style={styles.loginText}>
+              {hasItem ? "You already have this item!" : "CONFIRM"}
+            </Text>
           </Pressable>
         </View>
       </ModalPopUp>

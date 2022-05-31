@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   Text,
   View,
@@ -15,61 +16,7 @@ import Avatar from "@material-ui/core/Avatar";
 // import Avatar from "react-avatar";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import normalizeHeaderName from "axios/lib/helpers/normalizeHeaderName";
-import utils from "axios/lib/utils";
 import axios from "axios";
-import { useFocusEffect } from "@react-navigation/native";
-
-const tempInv = [
-  {
-    userId: 137280911484911616,
-    itemId: 125,
-    itemName: "Fancy Suit",
-    enable: "equipped",
-    itemType: "body",
-    imageName: "Fancy_Suit.png",
-  },
-  {
-    userId: 137280911484911616,
-    itemId: 139,
-    itemName: "Pipe",
-    enable: "equipped",
-    itemType: "head",
-    imageName: "Pipe.png",
-  },
-  {
-    userId: 137280911484911616,
-    itemId: 143,
-    itemName: "Blue Lightsaber",
-    enable: "unequipped",
-    itemType: "hand",
-    imageName: "blue_lightsaber.png",
-  },
-  {
-    userId: 137280911484911616,
-    itemId: 152,
-    itemName: "Black Sparrow",
-    enable: "equipped",
-    itemType: "hand",
-    imageName: "Sparrow_Black.png",
-  },
-  {
-    userId: 137280911484911616,
-    itemId: 153,
-    itemName: "Urban City Bg",
-    enable: "equipped",
-    itemType: "background",
-    imageName: "street_background.png",
-  },
-  {
-    userId: 137280911484911616,
-    itemId: 155,
-    itemName: "Jeans Converse",
-    enable: "unequipped",
-    itemType: "foot",
-    imageName: "jeans_converse.png",
-  },
-];
 
 const Inventory = ({ item, backgroundColor, textColor }) => (
   <Card
@@ -104,22 +51,7 @@ const Inventory = ({ item, backgroundColor, textColor }) => (
 //main
 const UserProfile = () => {
   const [inventoryList, setInventoryList] = useState([]);
-
-  //Not working
-  const getUserInv = async (token, userId) => {
-    axios
-      .get(`localhost:8080/userItem/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((response) => {
-        console.log("USER INV");
-        setInventoryList(response.data);
-      })
-      .catch((error) => {
-        console.log("INV ERROR");
-        console.log("ERROR " + error);
-      });
-  };
+  const [userCurrency, setCurrency] = useState([]);
 
   const getUserInvExpress = async (id) => {
     axios
@@ -127,25 +59,20 @@ const UserProfile = () => {
         user_id: id,
       })
       .then((response) => {
-        console.log(response.data);
         setInventoryList(response.data);
-        console.log("INVENTARIO VOLTOU");
       })
       .catch((error) => {
         console.log("ERROR " + error);
       });
   };
 
-  //Not Working
-  const getUserCurrency = async (token, userId) => {
+  const getCurrencyExpress = async (id) => {
     axios
-      .get(`http://localhost:8080/membersScore/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      .post("http://localhost:19007/userCurrency", {
+        user_id: id,
       })
       .then((response) => {
-        console.log("USER CURRENCY");
-        console.log(userId);
-        console.log(response.data);
+        setCurrency(response.data[0]);
       })
       .catch((error) => {
         console.log("ERROR " + error);
@@ -155,19 +82,14 @@ const UserProfile = () => {
   const renderInventory = ({ item }) => {
     return <Inventory item={item} />;
   };
-  /* 
-  useFocusEffect(() => {
-    // getUserInv(sessionStorage.getItem("Access_token"), 1); //inventory - actual one that must work
-    getItemsServidor(1);
-  }, []); */
 
-  useEffect(() => {
-    let id = 1;
-    getUserInvExpress(id);
-    // getItems(sessionStorage.getItem("Access_token"));
-    // setInventoryList(tempInv); //local test
-    // getUserCurrency(sessionStorage.getItem("Access_token"),string(137280911484911616));// would be nice to work too
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserInvExpress(sessionStorage.getItem("user_id"));
+      getCurrencyExpress(sessionStorage.getItem("user_id"));
+    }, [])
+  );
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 3 }}>
@@ -201,6 +123,9 @@ const UserProfile = () => {
             </Text>
           </CardContent>
         </Card>
+      </View>
+      <View style={{ flex: 1 }}>
+        <Text>Currency: {userCurrency.user_money}</Text>
       </View>
       <FlatList
         style={{ flex: 2 }}

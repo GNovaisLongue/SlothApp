@@ -1,40 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { IconButton } from "react-native-paper";
-import { Text, View } from "react-native";
+import { Text, View, Modal } from "react-native";
 import styles from "../../assets/Styles/styles";
 import axios from "axios";
-const JSONBigInt = require("json-bigint")({ storeAsString: true });
 
+//Modal loading
+const ModalOnLoad = ({ visible, children }) => {
+  return (
+    <Modal transparent visible={visible}>
+      <View style={styles.modalPopupBackground}>
+        <View style={styles.modalPopupContainer}>{children}</View>
+      </View>
+    </Modal>
+  );
+};
+
+//main
 const MainMenu = ({ navigation }) => {
+  const [isLoading, setLoading] = useState(true);
+  const [visible, setVisible] = useState(false);
+  //
   const [memberScore, setMemberScore] = useState([]);
 
+  //data related to the minigames
   const getScoreExpress = async (id) => {
-    //split bigint into to integers
-    // let part1 = id.slice(0, 8);
-    // let part2 = id.slice(8);
-    // console.log(parseInt(part1) + "" + parseInt(part2));
-    axios
+    await axios
       .post("http://localhost:19007/membersScore", {
         user_id: id,
       })
       .then((response) => {
-        setMemberScore(response.data);
-        console.log("SCORE VOLTOU");
-        console.log(response.data);
+        const userScore = response.data[0];
+        if (response.data.message) {
+          alert(response.data.message);
+        }
+        setMemberScore(userScore);
+        setLoading(false);
+        setVisible(false);
       })
       .catch((error) => {
         console.log("ERROR " + error);
       });
   };
 
-  const getUserInv = async (token, userId) => {
-    await axios
-      .get(`http://localhost:8080/membersScore/${userId}`, {
-        headers: { Authorization: `Bearer ${token}` },
+  //pre load - check if user already owns money
+  const getCurrencyExpress = async (id) => {
+    axios
+      .post("http://localhost:19007/userCurrency", {
+        user_id: id,
       })
       .then((response) => {
-        setMemberScore(response.data);
-        console.log(response.data);
+        console.log(response.data[0]);
       })
       .catch((error) => {
         console.log("ERROR " + error);
@@ -42,23 +58,35 @@ const MainMenu = ({ navigation }) => {
   };
 
   //load before rendering
-  useEffect(() => {
-    let user_id = "352507043514679307";
-    getScoreExpress(user_id);
-    // getUserInv(sessionStorage.getItem("Access_token"), 1);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getScoreExpress(sessionStorage.getItem("user_id"));
+      getCurrencyExpress(sessionStorage.getItem("user_id"));
+      setVisible(true);
+    }, [])
+  );
+
+  if (isLoading) {
+    return (
+      <ModalOnLoad visible={visible}>
+        <View style={{ alignItems: "center" }}>
+          <Text style={styles.modalPopupText}>Loading . . .</Text>
+        </View>
+      </ModalOnLoad>
+    );
+  }
   return (
     <View style={styles.container}>
       {/* HEADER */}
       <View style={styles.mainMenuHeader}>
         <Text style={styles.mainMenuLabel1} name="label1">
-          {memberScore.members_score_id}
+          ID: {memberScore.members_score_id}
         </Text>
         <Text style={styles.mainMenuLabel2} name="label2">
-          {memberScore.user_lvl}
+          XP: {memberScore.user_xp}
         </Text>
         <Text style={styles.mainMenuLabel3} name="label3">
-          {memberScore.user_xp}
+          Level: {memberScore.user_lvl}
         </Text>
       </View>
       {/* CHARACTER IMG  */}
