@@ -16,19 +16,19 @@ const DATA = [
   },
   {
     title: "Theme",
-    data: ["Button 1"],
+    data: ["Button 3"],
   },
   {
     title: "Privacy",
-    data: ["Button 1", "Button 2", "Button 3"],
+    data: ["Button 4", "Button 5", "Button 6"],
   },
   {
     title: "About Me",
-    data: ["button 1", "Button 2"],
+    data: ["button 7", "Button 8"],
   },
 ];
 
-const Item = ({ title }) => (
+const Item = ({ title, onPress }) => (
   <View style={styles.settingsItem}>
     <Pressable style={styles.loginButton} onPress={() => {}}>
       <Text style={styles.settingsTitle}>{title}</Text>

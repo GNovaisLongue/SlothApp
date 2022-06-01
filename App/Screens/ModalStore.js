@@ -46,6 +46,7 @@ const listModal = [
 ];
 
 let loadedItems; //IMPORTANT Array
+let message;
 
 //Modal popup during purchase
 const ModalPopUp = ({ visible, children }) => {
@@ -122,7 +123,6 @@ const ModalStore = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   //DB data
   const [itemsList, setItemsList] = useState(loadedItems);
-  const [isAdded, setIsAdded] = useState([]);
   //ModalPopUp visibility
   const [visible, setVisible] = useState(false);
   //item data - ModalPopupContent and DB receive that data
@@ -134,7 +134,7 @@ const ModalStore = () => {
   const [registeredItemPrice, setRegisteredItemPrice] = useState("");
   //button text - if user already has item or not
   const [hasItem, setHasItem] = useState(false);
-  const [buttonLabel, setLabel] = useState("");
+  const [popupLabel, setLabel] = useState("");
 
   //Load Store
   const getStoreItemsExpress = async () => {
@@ -155,21 +155,26 @@ const ModalStore = () => {
   //check inv and add item
   const checkUserInventory = async (item) => {
     //userInvInsert
-    axios
+    await axios
       .post("http://localhost:19007/checkUserInv", {
         user_id: userId,
-        registered_items_id: registeredItemId,
+        registered_items_id: item.registered_items_id,
       })
       .then((response) => {
+        message = response.data.message;
         if (response.data.result.length === 0) {
           //EDIT LATER - label delayed ---------------------------------
-          setLabel(
-            `Are you sure you want to buy '${item.item_name}', ID ${item.registered_items_id} for ${item.item_price} ?`
-          );
+          const label = `Are you sure you want to buy '${item.item_name}', ID ${item.registered_items_id} for ${item.item_price} ?`;
+          setLabel(label);
+          setHasItem(false);
         } else {
-          setLabel(response.data.message);
+          //the user already has the item
+          setLabel(message);
           setHasItem(true);
+          console.log(hasItem);
         }
+        //show modal popup
+        setVisible(true);
       })
       .catch((error) => {
         console.log("ERROR " + error);
@@ -187,7 +192,9 @@ const ModalStore = () => {
         registered_items_id: registeredItemId,
       })
       .then((response) => {
-        alert(response.data.message);
+        message = response.data.message;
+        // setLabel(message);
+        alert(message);
         setVisible(false);
       })
       .catch((error) => {
@@ -231,14 +238,12 @@ const ModalStore = () => {
       <ModalItems
         item={item}
         onPress={() => {
-          //pass item values to modal
+          //save some info we need
           setRegisteredItemImageName(item.image_name);
           setRegisteredItemName(item.item_name);
           setRegisteredItemType(item.item_type);
           setRegisteredItemId(item.registered_items_id);
           setRegisteredItemPrice(item.item_price);
-          // SHOW ModalPopupContent
-          setVisible(true);
           //Check if user already has item
           checkUserInventory(item);
           console.log(item);
@@ -264,6 +269,7 @@ const ModalStore = () => {
           renderItem={renderItemType}
         />
       </View>
+      {/* popup */}
       <ModalPopUp visible={visible}>
         <View style={{ alignItems: "center" }}>
           <View style={styles.modalPopupHeader}>
@@ -276,12 +282,11 @@ const ModalStore = () => {
               }}
             />
           </View>
-          <Text style={styles.modalPopupText}>{buttonLabel}</Text>
+          <Text style={styles.modalPopupText}>{popupLabel}</Text>
           <Pressable
             disabled={hasItem}
             style={styles.modalPopupButton}
             onPress={() => {
-              // checkUserInventory();
               checkUserMoney();
             }}
           >
@@ -291,6 +296,7 @@ const ModalStore = () => {
           </Pressable>
         </View>
       </ModalPopUp>
+
       <FlatList
         data={itemsList}
         keyExtractor={(item, index) => item.registered_items_id}
