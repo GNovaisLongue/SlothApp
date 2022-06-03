@@ -1,10 +1,17 @@
 import React, { useState } from "react";
-import { Text, View, TextInput, Pressable } from "react-native";
-import styles from "../../assets/Styles/styles";
+import {
+  Text,
+  View,
+  KeyboardAvoidingView,
+  Pressable,
+  StyleSheet,
+  ImageBackground,
+} from "react-native";
+import { TextInput } from "react-native-paper";
+// import styles from "../../assets/Styles/styles";
 import axios from "axios";
 
 const Login = ({ navigation }) => {
-  const [userData, setUserData] = useState([]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,7 +23,6 @@ const Login = ({ navigation }) => {
       })
       .then((response) => {
         const newUser = response.data;
-        setUserData(newUser);
         if (response.data.message) {
           alert(response.data.message);
         }
@@ -33,27 +39,90 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.loginScreenContainer}>
-      <Text style={styles.loginLogoText}>A</Text>
-      <TextInput
-        placeholder="Username"
-        placeholderColor="#c4c3cb"
-        style={styles.loginFormTextInput}
-        onChangeText={setUsername}
-      />
-      <TextInput
-        placeholder="Password"
-        placeholderColor="#c4c3cb"
-        style={styles.loginFormTextInput}
-        secureTextEntry={true}
-        onChangeText={setPassword}
-      />
-      <Pressable style={styles.loginButton} onPress={() => onLogin()}>
-        <Text style={styles.loginText}>Login</Text>
-      </Pressable>
-      <Pressable style={styles.loginButton} onPress={() => onSignIn()}>
-        <Text style={styles.loginText}>Sign Up</Text>
-      </Pressable>
+    <View style={{ flex: 1 }}>
+      <ImageBackground
+        source={require("../../assets/Images/forest.jpg")}
+        style={{ width: "100%", height: "100%", zIndex: 1 }}
+      >
+        <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <View style={styles.registerContainer}>
+            <View style={{ flex: 1, alignItems: "center" }}>
+              <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior="padding"
+                enabled
+              >
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      borderless
+                      placeholder="Name"
+                      theme={{
+                        colors: {
+                          text: "black",
+                          placeholder: "black",
+                          background: "#ffffff",
+                        },
+                      }}
+                      left={<TextInput.Icon name="account" color="black" />}
+                      value={username ?? ""}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </View>
+                  <View style={styles.inputContainer}>
+                    <TextInput
+                      borderless
+                      placeholder="Password"
+                      theme={{
+                        colors: {
+                          text: "black",
+                          placeholder: "black",
+                          background: "#ffffff",
+                        },
+                      }}
+                      secureTextEntry={true}
+                      left={<TextInput.Icon name="lock" color="black" />}
+                      value={password ?? ""}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </View>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View style={styles.viewButton}>
+                      <Pressable
+                        style={styles.Button}
+                        onPress={() => onLogin()}
+                      >
+                        <Text style={styles.buttonText}>Login</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.viewButton}>
+                      <Pressable
+                        style={styles.Button}
+                        onPress={() => onSignIn()}
+                      >
+                        <Text style={styles.buttonText}>Sign Up</Text>
+                      </Pressable>
+                    </View>
+                  </View>
+                </View>
+              </KeyboardAvoidingView>
+            </View>
+          </View>
+        </View>
+      </ImageBackground>
     </View>
   );
 
@@ -66,9 +135,51 @@ const Login = ({ navigation }) => {
       // navigation.navigate("Home");
     }
   }
-
   function onSignIn() {
     navigation.navigate("SignUp");
   }
 };
 export default Login;
+
+const styles = StyleSheet.create({
+  registerContainer: {
+    width: "90%",
+    height: "85%",
+    backgroundColor: "#FFFFFFB4",
+    borderRadius: 4,
+    shadowColor: "#DFDFDF56",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.1,
+    elevation: 1,
+    overflow: "hidden",
+  },
+  inputContainer: {
+    width: "110%",
+    marginBottom: 15,
+  },
+  viewButton: {
+    margin: 10,
+    width: "90%",
+    borderRadius: 10,
+    // backgroundColor: "#6DBD39",
+  },
+  Button: {
+    // width: "100%",
+    // backgroundColor: "#A0BF30",
+    // width: "80%",
+    // borderRadius: 5,
+    // padding: 5,
+  },
+  buttonText: {
+    color: "#476E20",
+    fontSize: 20,
+    fontWeight: "600",
+    textAlign: "center",
+    fontWeight: "bold",
+    margin: 15,
+  },
+});

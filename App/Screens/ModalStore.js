@@ -7,6 +7,7 @@ import {
   FlatList,
   Modal,
   Pressable,
+  StyleSheet,
 } from "react-native";
 import styles from "../../assets/Styles/styles";
 import Box from "@mui/material/Box";
@@ -246,7 +247,6 @@ const ModalStore = () => {
           setRegisteredItemPrice(item.item_price);
           //Check if user already has item
           checkUserInventory(item);
-          console.log(item);
         }}
       />
     );
@@ -307,3 +307,5 @@ const ModalStore = () => {
 };
 
 export default ModalStore;
+
+// const styles = StyleSheet.create({});
