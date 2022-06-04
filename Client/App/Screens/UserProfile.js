@@ -8,7 +8,7 @@ import {
   FlatList,
   Button,
 } from "react-native";
-import styles from "../../assets/Styles/styles";
+import styles from "../../App/assets/Styles/styles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -17,6 +17,9 @@ import Avatar from "@material-ui/core/Avatar";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+
+const imageItem = require("../../App/assets/adaptive-icon.png");
+const imageUserProfile = require("../../App/assets/Images/Blue_owl.png");
 
 const Inventory = ({ item, backgroundColor, textColor }) => (
   <Card
@@ -31,7 +34,7 @@ const Inventory = ({ item, backgroundColor, textColor }) => (
       title="owl"
       sx={{ width: 145, backgroundColor: "gray" }}
       component="img"
-      image={require("../../assets/adaptive-icon.png")}
+      image={imageItem}
       //item.imageName //crown.png
     />
     <CardContent sx={{ flex: "1 0 auto" }}>
@@ -108,7 +111,7 @@ const UserProfile = () => {
                 width: 200,
                 height: 200,
               }}
-              src={require("../../assets/Images/Blue_owl.png")}
+              src={imageUserProfile}
             />
             <Text
               sx={{

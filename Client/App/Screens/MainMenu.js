@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import { IconButton } from "react-native-paper";
 import { Text, View, Modal } from "react-native";
-import styles from "../../assets/Styles/styles";
+import styles from "../../App/assets/Styles/styles";
 import axios from "axios";
 
 //Modal loading

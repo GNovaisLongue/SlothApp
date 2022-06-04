@@ -7,7 +7,7 @@ import {
   SectionList,
   Pressable,
 } from "react-native";
-import styles from "../../assets/Styles/styles";
+import styles from "../../App/assets/Styles/styles";
 
 const DATA = [
   {

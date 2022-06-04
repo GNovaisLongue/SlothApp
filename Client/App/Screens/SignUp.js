@@ -13,6 +13,8 @@ import { TextInput } from "react-native-paper";
 import SnackbarAlert from "../Components/Snackbar";
 import axios from "axios";
 
+const imageBackground = require("../../App/assets/Images/forest.jpg");
+
 const SignUp = ({ navigation, route }) => {
   const [usernameSignup, setUsernameSignup] = useState("");
   const [passwordSignup, setPasswordSignup] = useState("");
@@ -42,7 +44,7 @@ const SignUp = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
-        source={require("../../assets/Images/forest.jpg")}
+        source={imageBackground}
         style={{ width: "100%", height: "100%", zIndex: 1 }}
       >
         <View
