@@ -31,9 +31,6 @@ const MainMenu = ({ navigation }) => {
       })
       .then((response) => {
         const userScore = response.data[0];
-        if (response.data.message) {
-          alert(response.data.message);
-        }
         setMemberScore(userScore);
         setLoading(false);
         setVisible(false);
@@ -50,7 +47,7 @@ const MainMenu = ({ navigation }) => {
         user_id: id,
       })
       .then((response) => {
-        console.log(response.data[0]);
+        // console.log(response.data[0]);
       })
       .catch((error) => {
         console.log("ERROR " + error);

@@ -134,8 +134,7 @@ const ModalStore = () => {
   const [registeredItemType, setRegisteredItemType] = useState("");
   const [registeredItemName, setRegisteredItemName] = useState("");
   const [registeredItemId, setRegisteredItemId] = useState("");
-  const [registeredItemPrice, setRegisteredItemPrice] = useState("");
-  //button text - if user already has item or not
+  //modal button - if user already has item or not
   const [hasItem, setHasItem] = useState(false);
   const [popupLabel, setLabel] = useState("");
 
@@ -166,7 +165,7 @@ const ModalStore = () => {
       .then((response) => {
         message = response.data.message;
         if (response.data.result.length === 0) {
-          //EDIT LATER - label delayed ---------------------------------
+          //EDIT LATER - label delayed
           const label = `Are you sure you want to buy '${item.item_name}', ID ${item.registered_items_id} for ${item.item_price} ?`;
           setLabel(label);
           setHasItem(false);
@@ -174,7 +173,6 @@ const ModalStore = () => {
           //the user already has the item
           setLabel(message);
           setHasItem(true);
-          console.log(hasItem);
         }
         //show modal popup
         setVisible(true);
@@ -196,9 +194,8 @@ const ModalStore = () => {
       })
       .then((response) => {
         message = response.data.message;
-        // setLabel(message);
-        alert(message);
-        setVisible(false);
+        setLabel(message);
+        setHasItem(true);
       })
       .catch((error) => {
         console.log("ERROR " + error);
@@ -246,7 +243,6 @@ const ModalStore = () => {
           setRegisteredItemName(item.item_name);
           setRegisteredItemType(item.item_type);
           setRegisteredItemId(item.registered_items_id);
-          setRegisteredItemPrice(item.item_price);
           //Check if user already has item
           checkUserInventory(item);
         }}
@@ -286,15 +282,13 @@ const ModalStore = () => {
           </View>
           <Text style={styles.modalPopupText}>{popupLabel}</Text>
           <Pressable
-            disabled={hasItem}
+            // disabled={hasItem}
             style={styles.modalPopupButton}
             onPress={() => {
-              checkUserMoney();
+              hasItem ? setVisible(false) : checkUserMoney();
             }}
           >
-            <Text style={styles.loginText}>
-              {hasItem ? "You already have this item!" : "CONFIRM"}
-            </Text>
+            <Text style={styles.loginText}>CONFIRM</Text>
           </Pressable>
         </View>
       </ModalPopUp>
