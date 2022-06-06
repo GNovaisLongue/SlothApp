@@ -1,7 +1,0 @@
-Client/node_modules
-Server/node_modules
-.expo
-.expo-shared
-.vscode
-.env
-package-lock.json
