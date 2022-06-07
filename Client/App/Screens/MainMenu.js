@@ -26,7 +26,7 @@ const MainMenu = ({ navigation }) => {
   //data related to the minigames
   const getScoreExpress = async (id) => {
     await axios
-      .post("http://localhost:19007/membersScore", {
+      .post("https://sloth-app-backend.herokuapp.com/membersScore", {
         user_id: id,
       })
       .then((response) => {
@@ -43,7 +43,7 @@ const MainMenu = ({ navigation }) => {
   //pre load - check if user already owns money
   const getCurrencyExpress = async (id) => {
     axios
-      .post("http://localhost:19007/userCurrency", {
+      .post("https://sloth-app-backend.herokuapp.com/userCurrency", {
         user_id: id,
       })
       .then((response) => {

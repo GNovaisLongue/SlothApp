@@ -81,7 +81,7 @@ const Classes = ({ navigation }) => {
 
   const getTeachersExpress = async () => {
     axios
-      .get("http://localhost:19007/activeClasses")
+      .get("https://sloth-app-backend.herokuapp.com/activeClasses")
       .then((response) => {
         setTeacherList(response.data);
       })

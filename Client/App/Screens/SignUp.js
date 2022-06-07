@@ -25,7 +25,7 @@ const SignUp = ({ navigation, route }) => {
 
   const userRegisterExpress = async () => {
     axios
-      .post("http://localhost:19007/register", {
+      .post("https://sloth-app-backend.herokuapp.com/register", {
         username: usernameSignup,
         user_email: userEmailSignup,
         password: passwordSignup,

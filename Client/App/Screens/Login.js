@@ -19,7 +19,7 @@ const Login = ({ navigation }) => {
 
   const getAccessExpress = async () => {
     return await axios
-      .post("http://localhost:19007/login", {
+      .post("https://sloth-app-backend.herokuapp.com/login", {
         username: username,
         password: password,
       })

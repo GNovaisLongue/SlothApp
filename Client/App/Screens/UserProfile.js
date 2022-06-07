@@ -57,8 +57,9 @@ const UserProfile = () => {
   const [userCurrency, setCurrency] = useState([]);
 
   const getUserInvExpress = async (id) => {
+    //http://localhost:19007
     axios
-      .post("http://localhost:19007/userItems", {
+      .post("https://sloth-app-backend.herokuapp.com/userItems", {
         user_id: id,
       })
       .then((response) => {
@@ -71,7 +72,7 @@ const UserProfile = () => {
 
   const getCurrencyExpress = async (id) => {
     axios
-      .post("http://localhost:19007/userCurrency", {
+      .post("https://sloth-app-backend.herokuapp.com/userCurrency", {
         user_id: id,
       })
       .then((response) => {

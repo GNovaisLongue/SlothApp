@@ -141,7 +141,7 @@ const ModalStore = () => {
   //Load Store
   const getStoreItemsExpress = async () => {
     axios
-      .get("http://localhost:19007/registeredItems")
+      .get("https://sloth-app-backend.herokuapp.com/registeredItems")
       .then((response) => {
         loadedItems = [];
         for (var i = 0; i < response.data.length; i++) {
@@ -158,7 +158,7 @@ const ModalStore = () => {
   const checkUserInventory = async (item) => {
     //userInvInsert
     await axios
-      .post("http://localhost:19007/checkUserInv", {
+      .post("https://sloth-app-backend.herokuapp.com/checkUserInv", {
         user_id: userId,
         registered_items_id: item.registered_items_id,
       })
@@ -185,7 +185,7 @@ const ModalStore = () => {
   //check money and buy item
   const checkUserMoney = async () => {
     axios
-      .post("http://localhost:19007/transaction", {
+      .post("https://sloth-app-backend.herokuapp.com/transaction", {
         user_id: userId,
         image_name: registeredItemImageName,
         item_name: registeredItemName,
