@@ -5,7 +5,8 @@ import UserProfile from "./UserProfile";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import ModalStore from "./ModalStore";
-import ModalCalendar from "./ModalCalendar";
+import ModalCalendar from "./GoogleCalendar";
+import Calendar from "./Calendar";
 
 export {
   MainMenu,
@@ -16,4 +17,5 @@ export {
   SignUp,
   ModalStore,
   ModalCalendar,
+  Calendar,
 };

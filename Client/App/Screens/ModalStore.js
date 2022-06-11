@@ -89,35 +89,53 @@ const ModalItems = ({ item, onPress }) => (
       image={imageItem}
       //item.imageName //crown.png
     />
-    <CardActionArea onClick={onPress}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          backgroundColor: "skyblue",
-        }}
-      >
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
-            {item.item_name} ({item.registered_items_id})
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-            component="div"
+    <Box
+      sx={{
+        flex: 1,
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "skyblue",
+        justifySelf: "stretch",
+      }}
+    >
+      <CardContent sx={{ flex: "1 0 auto" }}>
+        <Typography component="div" variant="h5">
+          {item.item_name}
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary" component="div">
+          {item.item_type}
+        </Typography>
+        <Typography variant="subtitle1" color="text.secondary" component="div">
+          {item.item_price}
+        </Typography>
+        <View
+          style={{
+            margin: 5,
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "flex-end",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Pressable
+            onPress={onPress}
+            style={{
+              backgroundColor: "lightgrey",
+            }}
           >
-            {item.item_type}
-          </Typography>
-          <Typography
-            variant="subtitle1"
-            color="text.secondary"
-            component="div"
-          >
-            {item.item_price}
-          </Typography>
-        </CardContent>
-      </Box>
-    </CardActionArea>
+            <Text
+              style={{
+                fontSize: 20,
+                fontWeight: "bold",
+                textDecorationLine: "underline",
+              }}
+            >
+              Select Item
+            </Text>
+          </Pressable>
+        </View>
+      </CardContent>
+    </Box>
   </Card>
 );
 

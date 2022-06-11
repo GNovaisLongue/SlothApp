@@ -90,6 +90,17 @@ const Classes = ({ navigation }) => {
       });
   };
 
+  const getUpcomingClasses = async () => {
+    axios
+      .get("http://localhost:3000/")
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log("ERROR " + error);
+      });
+  };
+
   const renderItems = ({ item }) => {
     return (
       <TeacherCards
@@ -103,7 +114,7 @@ const Classes = ({ navigation }) => {
 
   useEffect(() => {
     getTeachersExpress();
-    // setTeacherList(classes); //local array
+    getUpcomingClasses();
   }, []);
   return (
     <SafeAreaView style={styles.container}>
@@ -114,6 +125,13 @@ const Classes = ({ navigation }) => {
             navigation.navigate("ModalCalendar");
           }}
           title="Classes's Schedule"
+        />
+        <Button
+          buttonStyle={styles.loginButton}
+          onPress={() => {
+            navigation.navigate("Calendar");
+          }}
+          title="Personal Calendar"
         />
       </View>
       <FlatList

@@ -1,7 +1,13 @@
 import React from "react";
 import { NativeBaseProvider } from "native-base";
 import BottomTabs from "./Screens/BottomTabs";
-import { Login, SignUp, ModalStore, ModalCalendar } from "./Screens/Index";
+import {
+  Login,
+  SignUp,
+  ModalStore,
+  ModalCalendar,
+  Calendar,
+} from "./Screens/Index";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Provider as PaperProvider } from "react-native-paper";
@@ -56,6 +62,7 @@ export default function MainFile() {
           options={{ title: "Sloth Store" }}
         />
         <RootStack.Screen name="ModalCalendar" component={ModalCalendar} />
+        <RootStack.Screen name="Calendar" component={Calendar} />
       </RootStack.Navigator>
     );
   };

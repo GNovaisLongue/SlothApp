@@ -132,9 +132,9 @@ const Login = ({ navigation }) => {
     if (username == "" || password == "") {
       alert("1 ou mais campos vazios");
     } else {
-      getAccessExpress(); //comment this and uncomment the other two below to skip login check
-      // sessionStorage.setItem("user_id", 1);
-      // navigation.navigate("Home");
+      // getAccessExpress(); //comment this and uncomment the other two below to skip login check
+      sessionStorage.setItem("user_id", 4);
+      navigation.navigate("Home");
     }
   }
   function onSignIn() {
