@@ -59,7 +59,12 @@ export default function MainFile() {
         <RootStack.Screen
           name="ModalStore"
           component={ModalStore}
-          options={{ title: "Sloth Store" }}
+          options={{
+            title: "Sloth Store",
+            headerStyle: {
+              backgroundColor: "#19A04FB5",
+            },
+          }}
         />
         <RootStack.Screen name="ModalCalendar" component={ModalCalendar} />
         <RootStack.Screen name="Calendar" component={Calendar} />

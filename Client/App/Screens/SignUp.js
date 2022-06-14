@@ -6,21 +6,18 @@ import {
   Pressable,
   StyleSheet,
   ImageBackground,
-  Dimensions,
 } from "react-native";
 import { Checkbox } from "native-base";
 import { TextInput } from "react-native-paper";
 import SnackbarAlert from "../Components/Snackbar";
 import axios from "axios";
-
-const imageBackground = require("../../App/assets/Images/forest.jpg");
+import Images from "../Constants/Images";
 
 const SignUp = ({ navigation, route }) => {
   const [usernameSignup, setUsernameSignup] = useState("");
   const [passwordSignup, setPasswordSignup] = useState("");
   const [userEmailSignup, setUserEmailSignup] = useState("");
 
-  const { width, height } = Dimensions.get("screen");
   const [visible, setVisible] = useState(false);
 
   const userRegisterExpress = async () => {
@@ -44,7 +41,7 @@ const SignUp = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
-        source={imageBackground}
+        source={Images.imageBackground}
         style={{ width: "100%", height: "100%", zIndex: 1 }}
       >
         <View

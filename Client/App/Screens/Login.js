@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import {
   Text,
   View,
@@ -8,12 +9,10 @@ import {
   ImageBackground,
 } from "react-native";
 import { TextInput } from "react-native-paper";
-// import styles from "../../assets/Styles/styles";
 import axios from "axios";
+import Images from "../Constants/Images";
 
-const imageBackground = require("../../App/assets/Images/forest.jpg");
-
-const Login = ({ navigation }) => {
+const Login = ({ navigation, route }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -40,10 +39,17 @@ const Login = ({ navigation }) => {
       });
   };
 
+  useFocusEffect(
+    React.useCallback(() => {
+      setUsername("");
+      setPassword("");
+    }, [])
+  );
+
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
-        source={imageBackground}
+        source={Images.imageBackground}
         style={{ width: "100%", height: "100%", zIndex: 1 }}
       >
         <View
@@ -133,6 +139,7 @@ const Login = ({ navigation }) => {
       alert("1 ou mais campos vazios");
     } else {
       // getAccessExpress(); //comment this and uncomment the other two below to skip login check
+      sessionStorage.setItem("username", username);
       sessionStorage.setItem("user_id", 4);
       navigation.navigate("Home");
     }

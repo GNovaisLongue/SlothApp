@@ -92,19 +92,19 @@ const MainMenu = ({ navigation }) => {
       </View>
       {/* BALANCE | SHOP */}
       <View style={styles.mainMenuShopContainer}>
-        <IconButton
+        {/* <IconButton
           disabled={false}
           style={styles.mainMenuMoneyLabel}
           color="black"
           icon="bag-personal"
           size={32}
           onPress={() => localStorage.removeItem("Inventory")}
-        ></IconButton>
+        ></IconButton> */}
         <IconButton
           style={styles.mainMenuShopButton}
           color="black"
           icon="store"
-          size={32}
+          size={36}
           onPress={() => navigation.navigate("ModalStore")}
         />
       </View>

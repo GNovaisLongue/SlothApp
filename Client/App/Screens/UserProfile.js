@@ -4,49 +4,46 @@ import {
   Text,
   View,
   SafeAreaView,
-  TouchableOpacity,
   FlatList,
-  Button,
+  StyleSheet,
+  Image,
+  ImageBackground,
 } from "react-native";
-import styles from "../../App/assets/Styles/styles";
-import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Avatar from "@material-ui/core/Avatar";
-// import Avatar from "react-avatar";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
+import Images from "../Constants/Images";
 
-const imageItem = require("../../App/assets/adaptive-icon.png");
-const imageUserProfile = require("../../App/assets/Images/Blue_owl.png");
-
+//Item card
 const Inventory = ({ item, backgroundColor, textColor }) => (
   <Card
     sx={{
       display: "flex",
       padding: 1,
       marginBottom: 0.5,
-      backgroundColor: "lightgray",
+      backgroundColor: "lightblue",
     }}
   >
     <CardMedia
       title="owl"
       sx={{ width: 145, backgroundColor: "gray" }}
       component="img"
-      image={imageItem}
+      image={Images.imageItem}
       //item.imageName //crown.png
     />
     <CardContent sx={{ flex: "1 0 auto" }}>
-      <Typography component="div" variant="h5">
-        {item.item_name} ({item.item_name})
+      <Typography component="div" style={{ fontSize: 24, fontWeight: "bold" }}>
+        {item.item_name}
       </Typography>
-      <Typography variant="subtitle1" color="text.secondary" component="div">
+      <Typography
+        component="div"
+        color="text.secondary"
+        style={{ fontSize: 18, fontWeight: "normal" }}
+      >
         {item.item_type}
       </Typography>
-      {/* <Typography variant="subtitle1" color="text.s econdary" component="div">
-        {item.itemPrice}
-      </Typography> */}
     </CardContent>
   </Card>
 );
@@ -95,50 +92,93 @@ const UserProfile = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flex: 3 }}>
-        <Card
-          sx={{
-            borderRadius: 12,
-            minWidth: 512,
-            justifyContent: "center",
-            textAlign: "center",
-            display: "flex",
-          }}
+    <SafeAreaView
+      style={{
+        flex: 1,
+        flexDirection: "column",
+        justifyContent: "center",
+      }}
+    >
+      <ImageBackground
+        source={Images.imageBackground}
+        style={{ width: "100%", height: "100%", zIndex: 1 }}
+      >
+        <View
+          style={{ flex: 0.45, alignItems: "center", justifyContent: "center" }}
         >
-          <CardContent>
-            <Avatar
-              sx={{
-                width: 200,
-                height: 200,
-              }}
-              src={imageUserProfile}
-            />
-            <Text
-              sx={{
-                fontSize: 18,
-                fontWeight: "bold",
-                letterSpacing: "0.5px",
-                marginTop: 8,
-                marginBottom: 0,
+          <View style={styles.infoContainer}>
+            <View style={styles.avatarContainer}>
+              <Image source={Images.imageUserProfile} style={styles.avatar} />
+            </View>
+            <View
+              style={{
+                justifyContent: "stretch",
+                marginTop: 10,
+                marginBottom: 5,
+                marginHorizontal: 10,
               }}
             >
-              GET for the name here
-            </Text>
-          </CardContent>
-        </Card>
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text>Currency: {userCurrency.user_money}</Text>
-      </View>
-      <FlatList
-        style={{ flex: 2 }}
-        data={inventoryList}
-        keyExtractor={(item, index) => item.item_id}
-        renderItem={renderInventory}
-      />
+              <View style={{ alignItems: "center", marginBottom: 15 }}>
+                <Text style={styles.nameText}>
+                  {sessionStorage.getItem("username")}
+                </Text>
+              </View>
+              <View style={{ marginBottom: 5 }}>
+                <Text style={styles.currencyText}>
+                  Currency: {userCurrency.user_money}
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View style={{ flex: 0.55, marginHorizontal: 2 }}>
+          <FlatList
+            data={inventoryList}
+            keyExtractor={(item, index) => item.item_id}
+            renderItem={renderInventory}
+          />
+        </View>
+      </ImageBackground>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  avatarContainer: {
+    marginTop: 26,
+  },
+  avatar: {
+    justifySelf: "center",
+    alignSelf: "center",
+    width: 160,
+    height: 160,
+    borderRadius: 100,
+    borderWidth: 0,
+  },
+  infoContainer: {
+    width: "95%",
+    height: "95%",
+    backgroundColor: "#FFFFFFB4",
+    borderRadius: 4,
+    margin: 4,
+    shadowColor: "#DFDFDF56",
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowRadius: 8,
+    shadowOpacity: 0.1,
+    elevation: 1,
+    overflow: "hidden",
+  },
+  nameText: {
+    fontSize: 24,
+    fontWeight: "500",
+  },
+  currencyText: {
+    fontSize: 20,
+    fontWeight: "450",
+  },
+});
 
 export default UserProfile;

@@ -8,8 +8,8 @@ import {
   Modal,
   Pressable,
   StyleSheet,
+  ImageBackground,
 } from "react-native";
-import styles from "../../App/assets/Styles/styles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -18,8 +18,7 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { IconButton } from "react-native-paper";
 import axios from "axios";
-
-const imageItem = require("../../App/assets/adaptive-icon.png");
+import Images from "../Constants/Images";
 
 const listModal = [
   {
@@ -66,9 +65,9 @@ const ModalPopUp = ({ visible, children }) => {
 const ModalStatus = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity
     onPress={onPress}
-    style={[styles.modalItemType, backgroundColor]}
+    style={[styles.modalStatusBar, backgroundColor]}
   >
-    <Text style={[styles.modalTitle, textColor]}>{item.itemType}</Text>
+    <Text style={[styles.modalStatusText, textColor]}>{item.itemType}</Text>
   </TouchableOpacity>
 );
 
@@ -77,7 +76,7 @@ const ModalItems = ({ item, onPress }) => (
   <Card
     sx={{
       display: "flex",
-      padding: 1,
+      padding: 0.5,
       marginBottom: 0.5,
       backgroundColor: "lightgray",
     }}
@@ -86,7 +85,7 @@ const ModalItems = ({ item, onPress }) => (
       title="owl"
       sx={{ width: 145, backgroundColor: "gray" }}
       component="img"
-      image={imageItem}
+      image={Images.imageItem}
       //item.imageName //crown.png
     />
     <Box
@@ -99,18 +98,28 @@ const ModalItems = ({ item, onPress }) => (
       }}
     >
       <CardContent sx={{ flex: "1 0 auto" }}>
-        <Typography component="div" variant="h5">
+        <Typography
+          component="div"
+          style={{ fontSize: 24, fontWeight: "bold" }}
+        >
           {item.item_name}
         </Typography>
-        <Typography variant="subtitle1" color="text.secondary" component="div">
+        <Typography
+          component="div"
+          style={{ fontSize: 18, fontWeight: "normal" }}
+        >
           {item.item_type}
         </Typography>
-        <Typography variant="subtitle1" color="text.secondary" component="div">
+        <Typography
+          component="div"
+          style={{ fontSize: 20, fontWeight: "bold" }}
+        >
           {item.item_price}
         </Typography>
         <View
           style={{
             margin: 5,
+            padding: 10,
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "flex-end",
@@ -120,17 +129,19 @@ const ModalItems = ({ item, onPress }) => (
           <Pressable
             onPress={onPress}
             style={{
-              backgroundColor: "lightgrey",
+              // backgroundColor: "lightgrey",
+              borderRadius: 10,
             }}
           >
             <Text
               style={{
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: "bold",
                 textDecorationLine: "underline",
+                color: "black",
               }}
             >
-              Select Item
+              Purchase Item
             </Text>
           </Pressable>
         </View>
@@ -235,8 +246,7 @@ const ModalStore = () => {
   //
   //selection of touchable Status -- horizontal bar
   const renderItemType = ({ item }) => {
-    const backgroundColor =
-      item.id === selectedStatus ? "steelblue" : "skyblue";
+    const backgroundColor = item.id === selectedStatus ? "#395919" : "#BEDF54"; //"#7EA523";
     const color = item.id === selectedStatus ? "white" : "black";
     return (
       <ModalStatus
@@ -277,49 +287,109 @@ const ModalStore = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        <FlatList
-          data={listModal}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-          renderItem={renderItemType}
-        />
-      </View>
-      {/* popup */}
-      <ModalPopUp visible={visible}>
-        <View style={{ alignItems: "center" }}>
-          <View style={styles.modalPopupHeader}>
-            <IconButton
-              style={{ height: 30, width: 30 }}
-              color="black"
-              icon="window-close"
-              onPress={() => {
-                setVisible(false);
-              }}
-            />
-          </View>
-          <Text style={styles.modalPopupText}>{popupLabel}</Text>
-          <Pressable
-            // disabled={hasItem}
-            style={styles.modalPopupButton}
-            onPress={() => {
-              hasItem ? setVisible(false) : checkUserMoney();
-            }}
-          >
-            <Text style={styles.loginText}>CONFIRM</Text>
-          </Pressable>
+      <ImageBackground
+        source={Images.imageBackground}
+        style={{ width: "100%", height: "100%", zIndex: 1 }}
+      >
+        <View>
+          <FlatList
+            data={listModal}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+            renderItem={renderItemType}
+          />
         </View>
-      </ModalPopUp>
-
-      <FlatList
-        data={itemsList}
-        keyExtractor={(item, index) => item.registered_items_id}
-        renderItem={renderItems}
-      />
+        {/* popup */}
+        <ModalPopUp visible={visible}>
+          <View style={{ alignItems: "center" }}>
+            <View style={styles.modalPopupHeader}>
+              <IconButton
+                style={{ height: 30, width: 30 }}
+                color="black"
+                icon="window-close"
+                onPress={() => {
+                  setVisible(false);
+                }}
+              />
+            </View>
+            <Text style={styles.modalPopupText}>{popupLabel}</Text>
+            <Pressable
+              // disabled={hasItem}
+              style={styles.modalPopupButton}
+              onPress={() => {
+                hasItem ? setVisible(false) : checkUserMoney();
+              }}
+            >
+              <Text style={styles.popupButtonText}>CONFIRM</Text>
+            </Pressable>
+          </View>
+        </ModalPopUp>
+        <FlatList
+          data={itemsList}
+          keyExtractor={(item, index) => item.registered_items_id}
+          renderItem={renderItems}
+        />
+      </ImageBackground>
     </SafeAreaView>
   );
 };
 
 export default ModalStore;
 
-// const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+    justifyContent: "center",
+  },
+  modalStatusBar: {
+    padding: 5,
+    marginHorizontal: 2,
+    marginVertical: 4,
+    borderRadius: 12,
+  },
+  modalStatusText: {
+    fontSize: 32,
+  },
+  //ModalPopUp - Inside ModalStore.js
+  modalPopupBackground: {
+    flex: 1,
+    backgroundColor: "#FFFFFFA6",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalPopupContainer: {
+    width: "80%",
+    backgroundColor: "#ffffff",
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    borderRadius: 15,
+    elevation: 20,
+  },
+  modalPopupHeader: {
+    width: "100%",
+    height: 40,
+    alignItems: "flex-end",
+    justifyContent: "center",
+  },
+  modalPopupButton: {
+    height: 43,
+    width: "70%",
+    backgroundColor: "#19A04FB5",
+    borderRadius: 5,
+    padding: 10,
+    marginTop: 15,
+  },
+  modalPopupText: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+  popupButtonText: {
+    color: "#ffffff",
+    fontSize: 18,
+    fontWeight: "600",
+    textAlign: "center",
+  },
+});

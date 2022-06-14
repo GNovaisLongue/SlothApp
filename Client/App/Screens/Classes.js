@@ -16,6 +16,11 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import axios from "axios";
 
+// import { strict as assert } from "assert";
+
+// import stripHtml from "string-strip-html";//not working
+var striptags = require("striptags");
+
 const imageItem = require("../../App/assets/adaptive-icon.png");
 
 //Card Component inside Flatlist for items
@@ -94,6 +99,10 @@ const Classes = ({ navigation }) => {
     axios
       .get("http://localhost:3000/")
       .then((response) => {
+        let events = response.data.events;
+        console.log(events);
+        console.log(events[0].description);
+        console.log(striptags(events[0].description));
         console.log(response.data);
       })
       .catch((error) => {
