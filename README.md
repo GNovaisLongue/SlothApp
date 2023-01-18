@@ -4,7 +4,7 @@ Final Project - Mobile App
 Done using React
 
 This project is yet to be finished. It's on hold given some necessities to gather more knowledge about React and hybrid development.
-Initialy developed for mobile usage, but, given some unexpected issues and limited time, was hosted and presented using a browser.
+Initialy developed for mobile usage, but, given some unexpected issues, was hosted and presented via browser hosted on https://slothapp.netlify.app (heroku updated their terms, breaking my back end).
 
 -App.js - Initialization file leading to 'MainFile.js'
 -MainFile.js - contains the routes and root pages of the application.
@@ -21,5 +21,3 @@ Initialy developed for mobile usage, but, given some unexpected issues and limit
 
 -ModalStore.js - Store where you can exchange your points (leaves) for items to equip your character
 -ModalCalendar.js - Contais the google calendar
-
-Hosted on https://slothapp.netlify.app
